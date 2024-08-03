@@ -27,7 +27,11 @@ sudo apt install openjdk-21-jdk -y
 export JAVA_HOME=/usr/lib/jvm/java-1.21.0-openjdk-amd64
 ```
 
+On peut lister les JDK disponibles avec la commande suivante :
+```bash
+update-java-alternatives --list
+```
 On peut changer de JDK avec la commande suivante :
 ```bash
-sudo update-alternatives --config java
+sudo update-java-alternatives --set /usr/lib/jvm/java-1.11.0-openjdk-amd64
 ```

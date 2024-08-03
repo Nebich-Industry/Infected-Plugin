@@ -2,3 +2,7 @@ name: Infected
 version: '${project.version}'
 main: org.nebich.infected.Infected
 api-version: '1.21'
+commands:
+  join:
+    description: Join the infected game
+    usage: /<command>
