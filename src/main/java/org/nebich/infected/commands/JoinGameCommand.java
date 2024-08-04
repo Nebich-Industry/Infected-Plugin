@@ -26,6 +26,7 @@ public class JoinGameCommand implements CommandExecutor {
                 World currentWorldPlaying = this.worldsManager.getCurrentWorld();
                 Location teleportToGame = new Location(currentWorldPlaying, -60, 67, -28);
                 player.teleport(teleportToGame);
+                return true;
             } catch (Exception e) {
                 Bukkit.getLogger().log(Level.WARNING, "[Infected] Failed to teleport");
             }
