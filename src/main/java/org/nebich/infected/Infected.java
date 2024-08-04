@@ -10,7 +10,7 @@ import org.nebich.infected.worlds.WorldsManager;
 import java.util.Objects;
 import java.util.logging.Level;
 
-public final class Infected extends JavaPlugin {
+public class Infected extends JavaPlugin {
     private WorldsManager worldsManager;
 
     @Override
