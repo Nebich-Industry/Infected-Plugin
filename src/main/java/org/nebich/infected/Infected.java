@@ -4,13 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.nebich.infected.commands.JoinGameCommand;
+import org.nebich.infected.commands.InfectedCommand;
 import org.nebich.infected.worlds.WorldsManager;
 
 import java.util.Objects;
 import java.util.logging.Level;
 
-public final class Infected extends JavaPlugin {
+public class Infected extends JavaPlugin {
     private WorldsManager worldsManager;
 
     @Override
@@ -38,6 +38,7 @@ public final class Infected extends JavaPlugin {
     }
 
     private void loadCommands() {
-        Objects.requireNonNull(this.getCommand("join")).setExecutor(new JoinGameCommand(this.worldsManager));
+        Objects.requireNonNull(this.getCommand("infected")).setExecutor(new InfectedCommand(this.worldsManager));
+        Bukkit.getLogger().info("[Infected] Loaded commands successfully");
     }
 }
