@@ -29,7 +29,7 @@ public class TestJoinCommand {
 
     @Test
     @DisplayName("Test if the command teleport in the current game world")
-    void testCommand() {
+    public void testCommand() {
         Player player = serverMock.addPlayer();
         player.setOp(true);
 
