@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.nebich.infected.player.PlayerManager;
 import org.nebich.infected.worlds.WorldsManager;
 
 import java.util.HashMap;
@@ -13,8 +14,8 @@ import java.util.Map;
 public class InfectedCommand implements CommandExecutor {
     private final Map<String, CommandExecutor> subCommandsMap = new HashMap<>();
 
-    public InfectedCommand(WorldsManager worldsManager) {
-        this.subCommandsMap.put("join", new JoinGameCommand(worldsManager));
+    public InfectedCommand(WorldsManager worldsManager, PlayerManager playerManager) {
+        this.subCommandsMap.put("join", new JoinGameCommand(worldsManager, playerManager));
     }
 
     @Override
@@ -26,6 +27,7 @@ public class InfectedCommand implements CommandExecutor {
                 return true;
             }
             if (!args[0].isEmpty()) {
+                // TODO: Ajouter une commande Admin pour forcer le lancement dans un certain rôle
                 switch (args[0]) {
                     case "join":
                         this.subCommandsMap.get("join").onCommand(commandSender, command, s, args);
