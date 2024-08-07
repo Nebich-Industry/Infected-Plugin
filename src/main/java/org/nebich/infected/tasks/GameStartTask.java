@@ -2,6 +2,7 @@ package org.nebich.infected.tasks;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.nebich.infected.Infected;
@@ -26,24 +27,26 @@ public class GameStartTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        Collection<? extends Player> onlinePlayers = this.infectedPlugin.getServer().getOnlinePlayers();
-        if (this.startTimer > 0) {
-            this.startTimer--;
-            for (Player player : onlinePlayers) {
-                if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Lancement de la partie dans : " + TimeUtils.convertToMinutes(this.startTimer)));
+        if (this.gameManager.getGameStatus() != GameStatus.PLAYING) {
+            Collection<? extends Player> onlinePlayers = this.infectedPlugin.getServer().getOnlinePlayers();
+            if (this.startTimer > 0) {
+                this.startTimer--;
+                for (Player player : onlinePlayers) {
+                    if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Lancement de la partie dans : " + TimeUtils.convertToMinutes(this.startTimer)));
+                    }
                 }
             }
-        }
-        if (this.startTimer == 0 && onlinePlayers.size() > 2) {
-            playStartTimer(onlinePlayers);
-            this.gameManager.launch();
-            this.gameManager.setGameStatus(GameStatus.PLAYING);
-            cancel();
-        }
+            if (this.startTimer == 0 && onlinePlayers.size() > 2) {
+                playStartTimer(onlinePlayers);
+                this.gameManager.launch(false);
+                this.gameManager.setGameStatus(GameStatus.PLAYING);
+                cancel();
+            }
 
-        if (startTimer == 0 && !(onlinePlayers.size() > 2)) {
-            this.startTimer+= 30;
+            if (startTimer == 0 && !(onlinePlayers.size() > 2)) {
+                this.startTimer += 30;
+            }
         }
     }
 
@@ -53,6 +56,7 @@ public class GameStartTask extends BukkitRunnable {
                 for (Player player : onlinePlayers) {
                     if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {
                         player.sendTitle(String.valueOf(10 - i), null, -1, -1, -1);
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 100f, 1f);
                     }
                 }
             }

@@ -28,12 +28,14 @@ public class GameManager {
         this.gameStatus = gameStatus;
     }
 
-    public void launch() {
+    public void launch(boolean isAdminLaunch) {
         if (this.worldsManager.getCurrentWorld() == null) {
             this.worldsManager.setRandomWorld();
         }
-        this.playerManager.chooseFirstZombies();
-        // TODO: Ajouter le chronomètre
+        if (!isAdminLaunch) {
+            this.playerManager.chooseFirstZombies();
+        }
+        this.gameStatus = GameStatus.PLAYING;
         new GameEndTask(this.playerManager, this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
     }
 

@@ -68,12 +68,13 @@ public class WorldsManager {
     private void setWorldBorder() {
         WorldBorder currentWorldBorder = this.currentWorld.getWorldBorder();
         Location borderCenter = this.plugin.getConfig().getLocation("worlds.world_infected_city.border.center");
+        double borderRadius = this.plugin.getConfig().getDouble("worlds.world_infected_city.border.radius");
+        Bukkit.getLogger().info(String.format("[Infected] Radius : %s", borderRadius));
+        currentWorldBorder.setSize(borderRadius);
         if (borderCenter != null) {
             currentWorldBorder.setCenter(borderCenter);
             Bukkit.getLogger().info("[Infected] Configuration du centre de la world border");
         }
-        double borderRadius = this.plugin.getConfig().getDouble("worlds.world_infected_city.border.radius");
-        currentWorldBorder.setSize(borderRadius);
         Bukkit.getLogger().info("[Infected] Configuration de la taille de la world border");
         Bukkit.getLogger().info("[Infected] World border créée avec succès");
     }

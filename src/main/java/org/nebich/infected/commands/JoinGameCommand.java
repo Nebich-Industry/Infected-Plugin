@@ -1,6 +1,7 @@
 package org.nebich.infected.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -28,6 +29,7 @@ public class JoinGameCommand implements CommandExecutor {
             try {
                 World currentWorldPlaying = this.worldsManager.getCurrentWorld();
                 Location teleportToGame = new Location(currentWorldPlaying, -60, 67, -28);
+                player.setGameMode(GameMode.ADVENTURE);
                 player.teleport(teleportToGame);
                 this.playerManager.addPlayer(player);
                 return true;

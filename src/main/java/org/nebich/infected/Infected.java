@@ -31,7 +31,7 @@ public class Infected extends JavaPlugin {
     }
 
     private void loadCommands() {
-        Objects.requireNonNull(this.getCommand("infected")).setExecutor(new InfectedCommand(this.worldsManager, this.playerManager));
+        Objects.requireNonNull(this.getCommand("infected")).setExecutor(new InfectedCommand(this.worldsManager, this.playerManager, this.gameManager));
         Bukkit.getLogger().info("[Infected] Chargement des commandes effectué avec succès");
     }
 }
