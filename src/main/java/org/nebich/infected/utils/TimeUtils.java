@@ -13,7 +13,7 @@ public class TimeUtils {
     }
 
     public static String convertToMinutes(int secondsToConvert) {
-        int minutes = Math.round((float) secondsToConvert / 60);
+        int minutes = secondsToConvert / 60;
         int seconds = secondsToConvert % 60;
         return minutes + "min" + seconds + "s";
     }

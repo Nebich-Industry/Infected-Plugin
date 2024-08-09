@@ -2,21 +2,19 @@ package org.nebich.infected.player;
 
 import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
-import org.nebich.infected.game.GameManager;
 import org.nebich.infected.game.GameStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class PlayerManager {
-    private List<Survivor> survivors;
-    private List<Zombie> zombies;
+    private final List<Survivor> survivors = new ArrayList<>();
+    private final List<Zombie> zombies = new ArrayList<>();
     private final Infected plugin;
-    private final GameManager gameManager;
 
-    public PlayerManager(Infected plugin, GameManager gameManager) {
+    public PlayerManager(Infected plugin) {
         this.plugin = plugin;
-        this.gameManager = gameManager;
     }
 
     public void chooseFirstZombies() {
@@ -33,7 +31,7 @@ public class PlayerManager {
     }
 
     public void addPlayer(Player player) {
-        if (this.gameManager.getGameStatus() == GameStatus.PLAYING) {
+        if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
             this.zombies.add(new Zombie(player));
         } else {
             this.survivors.add(new Survivor(player));
@@ -47,5 +45,9 @@ public class PlayerManager {
 
     public List<Survivor> getSurvivors() {
         return this.survivors;
+    }
+
+    public List<Zombie> getZombies() {
+        return this.zombies;
     }
 }
