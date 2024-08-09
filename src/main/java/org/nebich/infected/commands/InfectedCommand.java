@@ -17,7 +17,7 @@ public class InfectedCommand implements CommandExecutor {
 
     public InfectedCommand(WorldsManager worldsManager, PlayerManager playerManager, GameManager gameManager) {
         this.subCommandsMap.put("join", new JoinGameCommand(worldsManager, playerManager));
-        this.subCommandsMap.put("admin", new InfectedAdminCommand(gameManager));
+        this.subCommandsMap.put("admin", new InfectedAdminCommand(gameManager, playerManager));
     }
 
     @Override

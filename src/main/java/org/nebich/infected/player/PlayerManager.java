@@ -40,6 +40,11 @@ public class PlayerManager {
         }
     }
 
+    public void addZombie(Player player) {
+        this.survivors.removeIf(survivor -> survivor.getPlayer().getUniqueId() == player.getUniqueId());
+        this.zombies.add(new Zombie(player));
+    }
+
     public List<Survivor> getSurvivors() {
         return this.survivors;
     }
