@@ -1,7 +1,6 @@
 package org.nebich.infected.game;
 
 import org.nebich.infected.Infected;
-import org.nebich.infected.tasks.GameEndTask;
 import org.nebich.infected.tasks.GameStartTask;
 import org.nebich.infected.tasks.GameTimerTask;
 import org.nebich.infected.utils.TimeUtils;
@@ -31,7 +30,7 @@ public class GameManager {
         }
         this.gameStatus = GameStatus.PLAYING;
         new GameTimerTask(this, this.plugin, this.plugin.getWorldsManager()).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
-        new GameEndTask(this.plugin.getPlayerManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+//        new GameEndTask(this.plugin.getPlayerManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
     }
 
     public void startWaitingTask() {
