@@ -28,7 +28,7 @@ public class TestPlayerManager {
     @Test
     @DisplayName("It should choose zombie")
     public void testChooseZombie() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         Player player2 = serverMock.addPlayer();
 

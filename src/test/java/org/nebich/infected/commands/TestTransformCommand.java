@@ -29,7 +29,7 @@ public class TestTransformCommand {
     @Test
     @DisplayName("It should force the player to become a zombie")
     public void testAdminTransformCommand() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         player.setOp(true);
 
@@ -44,7 +44,7 @@ public class TestTransformCommand {
     @Test
     @DisplayName("It should not force the player to become a zombie")
     public void testAdminTransformCommandWithoutPermission() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");

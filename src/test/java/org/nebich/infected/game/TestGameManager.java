@@ -30,7 +30,7 @@ public class TestGameManager {
     @Test
     @DisplayName("It should launch the game")
     public void testLaunch() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");
@@ -45,7 +45,7 @@ public class TestGameManager {
     @Test
     @DisplayName("It should launch the game without choosing zombies")
     public void testLaunchWithOPPlayer() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         player.setOp(true);
 
@@ -61,7 +61,7 @@ public class TestGameManager {
     @Test
     @DisplayName("It should launch the game without current world set")
     public void testLaunchWithoutCurrentWorld() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");
