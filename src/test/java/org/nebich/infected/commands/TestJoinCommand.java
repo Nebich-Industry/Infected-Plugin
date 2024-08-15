@@ -14,8 +14,8 @@ import org.nebich.infected.Infected;
 import java.util.Objects;
 
 public class TestJoinCommand {
-    private static ServerMock serverMock;
-    private static Infected infectedPlugin;
+    private ServerMock serverMock;
+    private Infected infectedPlugin;
 
     @BeforeEach
     public void load() {
@@ -31,13 +31,12 @@ public class TestJoinCommand {
     @Test
     @DisplayName("Test if the command teleport in the current game world")
     public void testCommand() {
-        // TODO: Find a way to mock the method server.getWorldCOntainer()
-        WorldMock infectedWorld = serverMock.addSimpleWorld("world_infected_dead_island");
+        WorldMock infectedWorld = serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         serverMock.execute("infected", player, "join").assertSucceeded();
-        Assertions.assertEquals(-60, player.getLocation().getBlockX());
-        Assertions.assertEquals(-28, player.getLocation().getBlockZ());
-        Assertions.assertEquals(Objects.requireNonNull(player.getLocation().getWorld()).getName(), infectedWorld.getName());
+        Assertions.assertEquals(2, player.getLocation().getBlockX());
+        Assertions.assertEquals(13, player.getLocation().getBlockZ());
+        Assertions.assertEquals(infectedWorld.getName(), Objects.requireNonNull(player.getLocation().getWorld()).getName());
     }
 }

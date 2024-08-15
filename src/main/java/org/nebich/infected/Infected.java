@@ -17,6 +17,7 @@ public class Infected extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
         Bukkit.getLogger().info("[Infected] Plugin activé");
         instance = this;
         this.worldsManager = new WorldsManager(this);

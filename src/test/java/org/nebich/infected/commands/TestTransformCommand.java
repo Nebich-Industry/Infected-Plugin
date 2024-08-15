@@ -29,11 +29,12 @@ public class TestTransformCommand {
     @Test
     @DisplayName("It should force the player to become a zombie")
     public void testAdminTransformCommand() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         player.setOp(true);
 
         player.performCommand("infected join");
+        player.performCommand("infected admin launch");
         player.performCommand("infected admin transform");
 
         Assertions.assertEquals(GameStatus.PLAYING ,infectedPlugin.getGameManager().getGameStatus());
@@ -43,13 +44,14 @@ public class TestTransformCommand {
     @Test
     @DisplayName("It should not force the player to become a zombie")
     public void testAdminTransformCommandWithoutPermission() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");
-        boolean cmdResult = player.performCommand("infected admin transform");
+        player.performCommand("infected admin launch");
+        player.performCommand("infected admin transform");
 
-        Assertions.assertFalse(cmdResult);
+        Assertions.assertEquals(GameStatus.WAITING ,infectedPlugin.getGameManager().getGameStatus());
         Assertions.assertEquals(0, infectedPlugin.getPlayerManager().getZombies().size());
     }
 }
