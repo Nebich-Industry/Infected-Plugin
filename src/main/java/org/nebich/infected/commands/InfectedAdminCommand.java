@@ -21,7 +21,7 @@ public class InfectedAdminCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
-        if (commandSender instanceof Player player && command.getName().equals("infected")) {
+        if (commandSender instanceof Player player && command.getName().equals("infected") && player.isOp()) {
             if (args.length == 1) {
                 player.sendMessage("Usage : /infected admin <command>");
                 player.sendMessage("Commands available : launch, transform");

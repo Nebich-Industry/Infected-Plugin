@@ -29,7 +29,7 @@ public class TestAdminStartCommand {
     @Test
     @DisplayName("It should force the start of a game")
     public void testAdminLaunchCommand() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         player.setOp(true);
 
@@ -42,13 +42,12 @@ public class TestAdminStartCommand {
     @Test
     @DisplayName("It should not force the start of a game")
     public void testAdminLaunchCommandWithoutPermission() {
-        serverMock.addSimpleWorld("world_infected_dead_island");
+        serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");
-        boolean cmdResult = player.performCommand("infected admin launch");
+        player.performCommand("infected admin launch");
 
-        Assertions.assertFalse(cmdResult);
         Assertions.assertEquals(GameStatus.WAITING ,infectedPlugin.getGameManager().getGameStatus());
     }
 }

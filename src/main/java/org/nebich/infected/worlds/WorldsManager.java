@@ -5,15 +5,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
+import org.bukkit.configuration.ConfigurationSection;
 import org.nebich.infected.Infected;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -35,24 +33,28 @@ public class WorldsManager {
     }
 
     private List<String> getAllWorlds() {
-        List<String> infectedWorlds = new ArrayList<>();
-        for (File potentialWorld : Objects.requireNonNull(Bukkit.getServer().getWorldContainer().listFiles())) {
-            if (potentialWorld.isDirectory() && Arrays.asList(Objects.requireNonNull(potentialWorld.list())).contains("level.dat") && potentialWorld.getName().startsWith("world_infected")) {
-                infectedWorlds.add(potentialWorld.getName());
-            }
+        ConfigurationSection configurationSection = this.plugin.getConfig().getConfigurationSection("worlds");
+
+        if (configurationSection != null) {
+            return new ArrayList<>(configurationSection.getKeys(false));
+        } else {
+            Bukkit.getLogger().warning("[Infected] La clé de configuration worlds n'est pas présente dans le fichier conf.yml !");
+            return null;
         }
-        return infectedWorlds;
     }
 
     public void loadWorlds() {
-        for (String worldName : this.getAllWorlds()) {
-            WorldCreator worldCreator = new WorldCreator(worldName);
-            World createdWorld = worldCreator.createWorld();
-            this.worlds.add(createdWorld);
+        List<String> worlds = this.getAllWorlds();
+        if (worlds != null) {
+            for (String worldName : worlds) {
+                WorldCreator worldCreator = new WorldCreator(worldName);
+                World createdWorld = worldCreator.createWorld();
+                this.worlds.add(createdWorld);
+            }
+            this.setCurrentWorld(this.worlds.iterator().next());
+            this.setWorldBorder();
+            Bukkit.getLogger().info("[Infected] Chargement des mondes effectué avec succès");
         }
-        this.setCurrentWorld(this.worlds.iterator().next());
-        this.setWorldBorder();
-        Bukkit.getLogger().info("[Infected] Chargement des mondes effectué avec succès");
     }
 
     public void setRandomWorld() {

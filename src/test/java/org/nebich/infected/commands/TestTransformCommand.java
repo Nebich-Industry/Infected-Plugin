@@ -34,6 +34,7 @@ public class TestTransformCommand {
         player.setOp(true);
 
         player.performCommand("infected join");
+        player.performCommand("infected admin launch");
         player.performCommand("infected admin transform");
 
         Assertions.assertEquals(GameStatus.PLAYING ,infectedPlugin.getGameManager().getGameStatus());
@@ -47,9 +48,10 @@ public class TestTransformCommand {
         Player player = serverMock.addPlayer();
 
         player.performCommand("infected join");
-        boolean cmdResult = player.performCommand("infected admin transform");
+        player.performCommand("infected admin launch");
+        player.performCommand("infected admin transform");
 
-        Assertions.assertFalse(cmdResult);
+        Assertions.assertEquals(GameStatus.WAITING ,infectedPlugin.getGameManager().getGameStatus());
         Assertions.assertEquals(0, infectedPlugin.getPlayerManager().getZombies().size());
     }
 }
