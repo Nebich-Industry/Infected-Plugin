@@ -1,22 +1,15 @@
 package org.nebich.infected.game;
 
 import org.nebich.infected.Infected;
-import org.nebich.infected.player.PlayerManager;
-import org.nebich.infected.tasks.GameEndTask;
 import org.nebich.infected.tasks.GameStartTask;
+import org.nebich.infected.tasks.GameTimerTask;
 import org.nebich.infected.utils.TimeUtils;
-import org.nebich.infected.worlds.WorldsManager;
 
 public class GameManager {
-    private final WorldsManager worldsManager;
-    private final PlayerManager playerManager;
     private GameStatus gameStatus = GameStatus.WAITING;
-    private final int gameDuration = 300;
     private final Infected plugin;
 
-    public GameManager(Infected plugin, WorldsManager worldsManager, PlayerManager playerManager) {
-        this.worldsManager = worldsManager;
-        this.playerManager = playerManager;
+    public GameManager(Infected plugin) {
         this.plugin = plugin;
     }
 
@@ -29,25 +22,32 @@ public class GameManager {
     }
 
     public void launch(boolean isAdminLaunch) {
-        if (this.worldsManager.getCurrentWorld() == null) {
-            this.worldsManager.setRandomWorld();
+        if (this.plugin.getWorldsManager().getCurrentWorld() == null) {
+            this.plugin.getWorldsManager().setRandomWorld();
         }
         if (!isAdminLaunch) {
-            this.playerManager.chooseFirstZombies();
+            this.plugin.getPlayerManager().chooseFirstZombies();
         }
         this.gameStatus = GameStatus.PLAYING;
-        new GameEndTask(this.playerManager, this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+        new GameTimerTask(this, this.plugin, this.plugin.getWorldsManager()).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+//        new GameEndTask(this.plugin.getPlayerManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
     }
 
     public void startWaitingTask() {
-        new GameStartTask(this.plugin, this.worldsManager, this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+        new GameStartTask(this.plugin, this.plugin.getWorldsManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
     }
 
     public void end() {
-
+        this.gameStatus = GameStatus.WAITING;
     }
 
-    public int getGameDuration() {
-        return gameDuration;
+    public int getGameTimer() {
+        // Temps en secondes soit 5 minutes
+        return 5 * 60;
+    }
+
+    public int getWaitingTimer() {
+        // Temps en secondes soit 2 minutes
+        return 2 * 60;
     }
 }

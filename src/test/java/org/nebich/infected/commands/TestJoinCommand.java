@@ -34,7 +34,6 @@ public class TestJoinCommand {
         // TODO: Find a way to mock the method server.getWorldCOntainer()
         WorldMock infectedWorld = serverMock.addSimpleWorld("world_infected_dead_island");
         Player player = serverMock.addPlayer();
-        player.setOp(true);
 
         serverMock.execute("infected", player, "join").assertSucceeded();
         Assertions.assertEquals(-60, player.getLocation().getBlockX());

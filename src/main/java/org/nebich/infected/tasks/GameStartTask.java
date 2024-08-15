@@ -14,7 +14,7 @@ import org.nebich.infected.worlds.WorldsManager;
 import java.util.Collection;
 
 public class GameStartTask extends BukkitRunnable {
-    private int startTimer = 120;
+    private int startTimer;
     private final Infected infectedPlugin;
     private final WorldsManager worldsManager;
     private final GameManager gameManager;
@@ -23,6 +23,7 @@ public class GameStartTask extends BukkitRunnable {
         this.infectedPlugin = plugin;
         this.worldsManager = worldsManager;
         this.gameManager = gameManager;
+        this.startTimer = this.gameManager.getWaitingTimer();
     }
 
     @Override
@@ -47,6 +48,8 @@ public class GameStartTask extends BukkitRunnable {
             if (startTimer == 0 && !(onlinePlayers.size() > 2)) {
                 this.startTimer += 30;
             }
+        } else {
+            cancel();
         }
     }
 

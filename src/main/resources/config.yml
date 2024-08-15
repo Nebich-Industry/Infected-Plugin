@@ -1,15 +1,13 @@
 worlds:
   world_infected_city:
     spawn:
-      world: world_infected_city
-      x: -69
-      y: -60
-      z: -23
+      x: 2.0
+      y: -59.0
+      z: 13.0
 
     border:
       center:
-        world: world_infected_city
-        x: -69
-        y: -60
-        z: -23
+        x: 2.0
+        y: -59.0
+        z: 13.0
       radius: 200.0

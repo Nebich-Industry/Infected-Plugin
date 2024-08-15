@@ -16,7 +16,7 @@ public class InfectedAdminCommand implements CommandExecutor {
 
     protected InfectedAdminCommand(GameManager gameManager, PlayerManager playerManager) {
         this.subCommandsMap.put("launch", new InfectedAdminStartCommand(gameManager));
-        this.subCommandsMap.put("transform", new InfectedAdminTransformCommand(playerManager));
+        this.subCommandsMap.put("transform", new InfectedAdminTransformCommand(playerManager, gameManager));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class InfectedAdminCommand implements CommandExecutor {
                     this.subCommandsMap.get("launch").onCommand(commandSender, command, s, args);
                 }
                 if (args[1].equals("transform")) {
-                    this.subCommandsMap.get("launch").onCommand(commandSender, command, s, args);
+                    this.subCommandsMap.get("transform").onCommand(commandSender, command, s, args);
                 }
             }
         }
