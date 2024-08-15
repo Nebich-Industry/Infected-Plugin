@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.nebich.infected.commands.InfectedCommand;
 import org.nebich.infected.game.GameManager;
 import org.nebich.infected.player.PlayerManager;
+import org.nebich.infected.survivors.SelectClassGUI;
 import org.nebich.infected.worlds.WorldsManager;
 
 import java.util.Objects;
@@ -13,6 +14,7 @@ public class Infected extends JavaPlugin {
     private WorldsManager worldsManager;
     private PlayerManager playerManager;
     private GameManager gameManager;
+    private SelectClassGUI selectClassGUI;
     private static Infected instance;
 
     @Override
@@ -25,6 +27,7 @@ public class Infected extends JavaPlugin {
         this.gameManager = new GameManager(this);
         this.worldsManager.loadWorlds();
         this.gameManager.startWaitingTask();
+        this.selectClassGUI = new SelectClassGUI(this);
         this.loadCommands();
     }
 
@@ -52,5 +55,9 @@ public class Infected extends JavaPlugin {
 
     public WorldsManager getWorldsManager() {
         return this.worldsManager;
+    }
+
+    public SelectClassGUI getSelectClassGUI() {
+        return selectClassGUI;
     }
 }

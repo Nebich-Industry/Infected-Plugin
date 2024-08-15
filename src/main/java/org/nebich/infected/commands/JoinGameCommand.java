@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.nebich.infected.Infected;
 import org.nebich.infected.player.PlayerManager;
+import org.nebich.infected.survivors.SelectRoleItem;
 import org.nebich.infected.worlds.WorldsManager;
 
 import java.util.logging.Level;
@@ -35,6 +36,7 @@ public class JoinGameCommand implements CommandExecutor {
                 player.setGameMode(GameMode.ADVENTURE);
                 player.teleport(teleportToGame);
                 this.playerManager.addPlayer(player);
+                player.getInventory().setItem(4, new SelectRoleItem(this.plugin).getItemStack());
                 return true;
             } catch (Exception e) {
                 player.sendMessage("Une erreur s'est produite lors de la téléportation");

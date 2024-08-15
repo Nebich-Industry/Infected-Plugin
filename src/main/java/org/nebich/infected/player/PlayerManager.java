@@ -3,9 +3,11 @@ package org.nebich.infected.player;
 import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
+import org.nebich.infected.survivors.Role;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class PlayerManager {
@@ -36,6 +38,11 @@ public class PlayerManager {
         } else {
             this.survivors.add(new Survivor(player));
         }
+    }
+
+    public void selectSurvivorClass(Player player, Role role) {
+        Optional<Survivor> survivor = this.survivors.stream().filter(s -> s.getPlayer().getUniqueId() == player.getUniqueId()).findFirst();
+        survivor.ifPresent(value -> value.setRole(role));
     }
 
     public void addZombie(Player player) {
