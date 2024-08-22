@@ -34,7 +34,7 @@ public class TestJoinCommand {
         WorldMock infectedWorld = serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
 
-        serverMock.execute("infected", player, "join").assertSucceeded();
+        player.performCommand("infected join");
         Assertions.assertEquals(2, player.getLocation().getBlockX());
         Assertions.assertEquals(13, player.getLocation().getBlockZ());
         Assertions.assertEquals(infectedWorld.getName(), Objects.requireNonNull(player.getLocation().getWorld()).getName());
