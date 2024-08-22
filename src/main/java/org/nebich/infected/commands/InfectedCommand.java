@@ -21,7 +21,7 @@ public class InfectedCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (commandSender instanceof Player player && command.getName().equals("infected")) {
-            if (args.length == 0) {
+            if (args[0].isEmpty()) {
                 player.sendMessage("Usage : /infected <command>");
                 if (player.isOp()) {
                     player.sendMessage("Commands available : join, admin");
@@ -30,13 +30,12 @@ public class InfectedCommand implements CommandExecutor {
                 }
                 return true;
             }
-            if (!args[0].isEmpty()) {
-                if (args[0].equals(CommandPrefix.JOIN)) {
-                    this.subCommandsMap.get(CommandPrefix.JOIN).onCommand(commandSender, command, s, args);
-                }
-                if (args[0].equals(CommandPrefix.ADMIN)) {
-                    this.subCommandsMap.get(CommandPrefix.ADMIN).onCommand(commandSender, command, s, args);
-                }
+
+            if (args[0].equals(CommandPrefix.JOIN)) {
+                this.subCommandsMap.get(CommandPrefix.JOIN).onCommand(commandSender, command, s, args);
+            }
+            if (args[0].equals(CommandPrefix.ADMIN)) {
+                this.subCommandsMap.get(CommandPrefix.ADMIN).onCommand(commandSender, command, s, args);
             }
         }
         return false;
