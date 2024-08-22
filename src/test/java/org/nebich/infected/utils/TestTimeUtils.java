@@ -8,12 +8,12 @@ public class TestTimeUtils {
     @Test
     @DisplayName("It should convert to Minecraft seconds")
     public void testSeconds() {
-        Assertions.assertEquals(20, TimeUtils.Seconds(1));
+        Assertions.assertEquals(20, TimeUtils.seconds(1));
     }
 
     @Test
     @DisplayName("It should convert to Minecraft minutes")
     public void testMinutes() {
-        Assertions.assertEquals(1200, TimeUtils.Minutes(1));
+        Assertions.assertEquals(1200, TimeUtils.minutes(1));
     }
 }

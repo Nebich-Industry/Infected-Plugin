@@ -29,12 +29,11 @@ public class GameManager {
             this.plugin.getPlayerManager().chooseFirstZombies();
         }
         this.gameStatus = GameStatus.PLAYING;
-        new GameTimerTask(this, this.plugin, this.plugin.getWorldsManager()).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
-//        new GameEndTask(this.plugin.getPlayerManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+        new GameTimerTask(this, this.plugin, this.plugin.getWorldsManager()).runTaskTimer(this.plugin, 0, TimeUtils.seconds(1));
     }
 
     public void startWaitingTask() {
-        new GameStartTask(this.plugin, this.plugin.getWorldsManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.Seconds(1));
+        new GameStartTask(this.plugin, this.plugin.getWorldsManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.seconds(1));
     }
 
     public void end() {

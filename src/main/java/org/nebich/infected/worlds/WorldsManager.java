@@ -39,14 +39,14 @@ public class WorldsManager {
             return new ArrayList<>(configurationSection.getKeys(false));
         } else {
             Bukkit.getLogger().warning("[Infected] La clé de configuration worlds n'est pas présente dans le fichier conf.yml !");
-            return null;
+            return new ArrayList<>();
         }
     }
 
     public void loadWorlds() {
-        List<String> worlds = this.getAllWorlds();
-        if (worlds != null) {
-            for (String worldName : worlds) {
+        List<String> worldsToLoad = this.getAllWorlds();
+        if (!worldsToLoad.isEmpty()) {
+            for (String worldName : worldsToLoad) {
                 WorldCreator worldCreator = new WorldCreator(worldName);
                 World createdWorld = worldCreator.createWorld();
                 this.worlds.add(createdWorld);
@@ -69,8 +69,9 @@ public class WorldsManager {
 
     private void setWorldBorder() {
         WorldBorder currentWorldBorder = this.currentWorld.getWorldBorder();
-        Location borderCenter = new Location(this.currentWorld, this.plugin.getConfig().getDouble("worlds."+this.currentWorld.getName()+".spawn.x"), this.plugin.getConfig().getDouble("worlds."+this.currentWorld.getName()+".spawn.y"), this.plugin.getConfig().getDouble("worlds."+this.currentWorld.getName()+".spawn.z"));
-        double borderRadius = this.plugin.getConfig().getDouble("worlds."+this.currentWorld.getName()+".border.radius");
+        String worldConfigKey = "worlds."+this.currentWorld.getName();
+        Location borderCenter = new Location(this.currentWorld, this.plugin.getConfig().getDouble(worldConfigKey+".spawn.x"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.y"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.z"));
+        double borderRadius = this.plugin.getConfig().getDouble(worldConfigKey+".border.radius");
         Bukkit.getLogger().info(String.format("[Infected] Radius : %s", borderRadius));
         currentWorldBorder.setSize(borderRadius);
         currentWorldBorder.setCenter(borderCenter);

@@ -23,11 +23,14 @@ public class PlayerManager {
         int survivorsSize = this.survivors.size();
         int zombiesToChoose = survivorsSize <= 10 ? 1 : Math.max(Math.round((float) survivorsSize / 10), 5);
         for (int i=0; i < zombiesToChoose; i++) {
-            int randomIndex = new Random().nextInt(survivorsSize);
-            Survivor s = this.survivors.get(randomIndex);
-            Player playerSelected = s.getPlayer();
+            Random random = new Random();
+            int randomIndex = random.nextInt(survivorsSize);
+            Survivor survivorToRemove = this.survivors.get(randomIndex);
+            Player playerSelected = survivorToRemove.getPlayer();
             this.zombies.add(new Zombie(playerSelected, true));
-            this.survivors.remove(randomIndex);
+            if (this.survivors.get(randomIndex).getPlayer().getUniqueId() == survivorToRemove.getPlayer().getUniqueId()) {
+                this.survivors.remove(randomIndex);
+            }
             playerSelected.sendMessage("Vous venez de vous transformer en zombie.");
         }
     }
