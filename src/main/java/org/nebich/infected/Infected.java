@@ -15,13 +15,11 @@ public class Infected extends JavaPlugin {
     private PlayerManager playerManager;
     private GameManager gameManager;
     private SelectClassGUI selectClassGUI;
-    private static Infected instance;
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
         Bukkit.getLogger().info("[Infected] Plugin activé");
-        instance = this;
         this.worldsManager = new WorldsManager(this);
         this.playerManager = new PlayerManager(this);
         this.gameManager = new GameManager(this);
@@ -39,10 +37,6 @@ public class Infected extends JavaPlugin {
     private void loadCommands() {
         Objects.requireNonNull(this.getCommand("infected")).setExecutor(new InfectedCommand(this));
         Bukkit.getLogger().info("[Infected] Chargement des commandes effectué avec succès");
-    }
-
-    public static Infected getInstance() {
-        return instance;
     }
 
     public GameManager getGameManager() {

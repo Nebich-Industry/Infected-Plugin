@@ -15,8 +15,8 @@ public class InfectedAdminCommand implements CommandExecutor {
     private final Map<String, CommandExecutor> subCommandsMap = new HashMap<>();
 
     protected InfectedAdminCommand(GameManager gameManager, PlayerManager playerManager) {
-        this.subCommandsMap.put("launch", new InfectedAdminStartCommand(gameManager));
-        this.subCommandsMap.put("transform", new InfectedAdminTransformCommand(playerManager, gameManager));
+        this.subCommandsMap.put(CommandPrefix.LAUNCH, new InfectedAdminStartCommand(gameManager));
+        this.subCommandsMap.put(CommandPrefix.TRANSFORM, new InfectedAdminTransformCommand(playerManager, gameManager));
     }
 
     @Override
@@ -28,11 +28,11 @@ public class InfectedAdminCommand implements CommandExecutor {
                 return true;
             }
             if (!args[0].isEmpty()) {
-                if (args[1].equals("launch")) {
-                    this.subCommandsMap.get("launch").onCommand(commandSender, command, s, args);
+                if (args[1].equals(CommandPrefix.LAUNCH)) {
+                    this.subCommandsMap.get(CommandPrefix.LAUNCH).onCommand(commandSender, command, s, args);
                 }
-                if (args[1].equals("transform")) {
-                    this.subCommandsMap.get("transform").onCommand(commandSender, command, s, args);
+                if (args[1].equals(CommandPrefix.TRANSFORM)) {
+                    this.subCommandsMap.get(CommandPrefix.TRANSFORM).onCommand(commandSender, command, s, args);
                 }
             }
         }

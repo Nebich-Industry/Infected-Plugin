@@ -28,33 +28,32 @@ public class GameStartTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (this.gameManager.getGameStatus() != GameStatus.PLAYING) {
-            Collection<? extends Player> onlinePlayers = this.infectedPlugin.getServer().getOnlinePlayers();
-            if (this.startTimer > 0) {
-                this.startTimer--;
-                for (Player player : onlinePlayers) {
-                    if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Lancement de la partie dans : " + TimeUtils.convertToMinutes(this.startTimer)));
-                    }
+        if (this.gameManager.getGameStatus() == GameStatus.PLAYING) {
+            cancel();
+        }
+        Collection<? extends Player> onlinePlayers = this.infectedPlugin.getServer().getOnlinePlayers();
+        if (this.startTimer > 0) {
+            this.startTimer--;
+            for (Player player : onlinePlayers) {
+                if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("Lancement de la partie dans : " + TimeUtils.convertToMinutes(this.startTimer)));
                 }
             }
-            if (this.startTimer == 0 && onlinePlayers.size() > 2) {
+        }
+        if (this.startTimer == 0) {
+            if (onlinePlayers.size() > 2) {
                 playStartTimer(onlinePlayers);
                 this.gameManager.launch(false);
                 this.gameManager.setGameStatus(GameStatus.PLAYING);
                 cancel();
-            }
-
-            if (startTimer == 0 && !(onlinePlayers.size() > 2)) {
+            } else {
                 this.startTimer += 30;
             }
-        } else {
-            cancel();
         }
     }
 
     private void playStartTimer(Collection<? extends Player> onlinePlayers) {
-        for (int i=1; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             if (i > 5) {
                 for (Player player : onlinePlayers) {
                     if (player.isOnline() && player.getWorld() == this.worldsManager.getCurrentWorld()) {

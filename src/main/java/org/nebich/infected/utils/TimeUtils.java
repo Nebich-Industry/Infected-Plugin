@@ -1,15 +1,19 @@
 package org.nebich.infected.utils;
 
 public class TimeUtils {
-    private static final int tickToSecond = 20;
-    private static final int secondToMinute = 60;
+    private static final int TICK_TO_SECOND = 20;
+    private static final int SECOND_TO_MINUTE = 60;
 
-    public static int Seconds(int seconds) {
-        return seconds * tickToSecond;
+    private TimeUtils() {
+        throw new IllegalStateException("TimeUtils class");
     }
 
-    public static int Minutes(int minutes) {
-        return minutes * secondToMinute * tickToSecond;
+    public static int seconds(int seconds) {
+        return seconds * TICK_TO_SECOND;
+    }
+
+    public static int minutes(int minutes) {
+        return minutes * SECOND_TO_MINUTE * TICK_TO_SECOND;
     }
 
     public static String convertToMinutes(int secondsToConvert) {

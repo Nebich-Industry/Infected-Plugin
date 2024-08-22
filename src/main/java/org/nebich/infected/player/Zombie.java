@@ -22,6 +22,6 @@ public class Zombie implements Listener {
     }
 
     public void transform() {
-
+        // Will be implemented with zombies features
     }
 }
