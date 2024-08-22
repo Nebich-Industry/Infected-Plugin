@@ -22,12 +22,12 @@ public class SelectRoleItem implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
 
-        ItemStack itemStack = new ItemStack(Material.NETHER_STAR);
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemStack selectionItemStack = new ItemStack(Material.NETHER_STAR);
+        ItemMeta itemMeta = selectionItemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.BOLD + ChatColor.AQUA.toString() + "Sélection de classes");
-        itemStack.setItemMeta(itemMeta);
+        selectionItemStack.setItemMeta(itemMeta);
 
-        this.itemStack = itemStack;
+        this.itemStack = selectionItemStack;
     }
 
     public ItemStack getItemStack() {

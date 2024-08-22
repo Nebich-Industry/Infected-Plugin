@@ -43,10 +43,10 @@ public class SelectClassGUI implements InventoryHolder, Listener {
 
     @EventHandler
     public void handleInventoryClick(InventoryClickEvent event) {
-        Inventory inventory = event.getInventory();
+        Inventory eventInventory = event.getInventory();
         // Check if the holder is our MyInventory,
         // if yes, use instanceof pattern matching to store it in a variable immediately.
-        if (!(inventory.getHolder() instanceof SelectClassGUI) || event.getCurrentItem() == null) {
+        if (!(eventInventory.getHolder() instanceof SelectClassGUI) || event.getCurrentItem() == null) {
             // It's not our inventory, ignore it.
             return;
         }
