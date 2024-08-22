@@ -25,7 +25,6 @@ public class SelectRoleItem implements Listener {
         ItemStack itemStack = new ItemStack(Material.NETHER_STAR);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.BOLD + ChatColor.AQUA.toString() + "Sélection de classes");
-        itemMeta.setItemName("role-selection");
         itemStack.setItemMeta(itemMeta);
 
         this.itemStack = itemStack;
@@ -40,7 +39,7 @@ public class SelectRoleItem implements Listener {
         if (event.getItem() == null) return;
         ItemStack itemClicked = event.getItem();
 
-        if ((event.getAction() != Action.PHYSICAL && Objects.requireNonNull(itemClicked.getItemMeta()).getItemName().equals("role-selection"))) {
+        if ((event.getAction() != Action.PHYSICAL && Objects.requireNonNull(itemClicked.getItemMeta()).getDisplayName().toLowerCase().contains("sélection"))) {
             event.setCancelled(true);
             Player player = event.getPlayer();
             player.openInventory(this.plugin.getSelectClassGUI().getInventory());
