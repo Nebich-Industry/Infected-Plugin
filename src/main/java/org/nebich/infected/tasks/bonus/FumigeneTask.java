@@ -16,7 +16,7 @@ public class FumigeneTask extends BukkitRunnable {
     private final Location blockHitedByFumigene;
     private final Player shooter;
     private int timer = 5;
-    private static final double sphereRadius = 5;
+    private static final double SPHERE_RADIUS = 5;
 
     public FumigeneTask(Player player, Location blockHitedByFumigene, Infected plugin) {
         this.blockHitedByFumigene = blockHitedByFumigene;
@@ -30,7 +30,7 @@ public class FumigeneTask extends BukkitRunnable {
             cancel();
         }
         ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter, true);
-        List<Player> playerInTheGame = shooter.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(this.blockHitedByFumigene) <= sphereRadius).toList();
+        List<Player> playerInTheGame = shooter.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(this.blockHitedByFumigene) <= SPHERE_RADIUS).toList();
         for (Player player : playerInTheGame) {
             if (player.getUniqueId() != this.shooter.getUniqueId()) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, TimeUtils.seconds(2), 0));
