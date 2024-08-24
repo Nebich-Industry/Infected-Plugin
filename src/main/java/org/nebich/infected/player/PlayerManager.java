@@ -37,7 +37,7 @@ public class PlayerManager {
 
     public void addPlayer(Player player) {
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
-            this.zombies.add(new Zombie(player));
+            this.addZombie(player);
         } else {
             this.survivors.add(new Survivor(player));
         }
