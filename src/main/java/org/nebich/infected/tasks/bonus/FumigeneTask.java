@@ -16,7 +16,7 @@ public class FumigeneTask extends BukkitRunnable {
     private final Location blockHitedByFumigene;
     private final Player shooter;
     private int timer = 5;
-    private final double sphereRadius = 5;
+    private static final double sphereRadius = 5;
 
     public FumigeneTask(Player player, Location blockHitedByFumigene, Infected plugin) {
         this.blockHitedByFumigene = blockHitedByFumigene;

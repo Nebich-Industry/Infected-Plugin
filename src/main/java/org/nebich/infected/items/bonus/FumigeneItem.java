@@ -34,12 +34,10 @@ public class FumigeneItem implements Listener {
     @EventHandler
     public void handleHitOnTheGround(ProjectileHitEvent event) {
         Projectile projectile = event.getEntity();
-        if (projectile.getShooter() instanceof Player) {
-            if (projectile instanceof FumigeneItem) {
-                Block blockHited = event.getHitBlock();
-                if (blockHited != null) {
-                    new FumigeneTask(((Player) projectile.getShooter()).getPlayer(), blockHited.getLocation(), this.plugin);
-                }
+        if (projectile.getShooter() instanceof Player && projectile instanceof FumigeneItem) {
+            Block blockHited = event.getHitBlock();
+            if (blockHited != null) {
+                new FumigeneTask(((Player) projectile.getShooter()).getPlayer(), blockHited.getLocation(), this.plugin);
             }
         }
     }
