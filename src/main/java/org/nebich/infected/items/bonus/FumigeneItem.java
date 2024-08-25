@@ -13,22 +13,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.nebich.infected.Infected;
 import org.nebich.infected.tasks.bonus.FumigeneTask;
 
-public class FumigeneItem implements Listener {
-    private final ItemStack item;
+public class FumigeneItem extends Bonus implements Listener{
     private final Infected plugin;
 
     public FumigeneItem(Infected plugin) {
+        super();
         this.plugin = plugin;
-        this.item = new ItemStack(Material.SNOWBALL);
-        ItemMeta meta = this.item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.BOLD + ChatColor.GRAY.toString() + "Fumigène");
-        }
-        this.item.setItemMeta(meta);
-    }
-
-    public ItemStack getItem() {
-        return this.item;
+        this.setItem(createItem());
     }
 
     @EventHandler
@@ -40,5 +31,15 @@ public class FumigeneItem implements Listener {
                 new FumigeneTask(((Player) projectile.getShooter()).getPlayer(), blockHited.getLocation(), this.plugin);
             }
         }
+    }
+
+    public ItemStack createItem() {
+        ItemStack item = new ItemStack(Material.SNOWBALL);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.BOLD + ChatColor.GRAY.toString() + "Fumigene");
+        }
+        item.setItemMeta(meta);
+        return item;
     }
 }

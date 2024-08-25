@@ -21,7 +21,7 @@ public class FumigeneTask extends BukkitRunnable {
     public FumigeneTask(Player player, Location blockHitedByFumigene, Infected plugin) {
         this.blockHitedByFumigene = blockHitedByFumigene;
         this.shooter = player;
-        this.runTaskTimerAsynchronously(plugin, 0, 20);
+        this.runTaskTimer(plugin, 0, 20);
     }
 
     @Override

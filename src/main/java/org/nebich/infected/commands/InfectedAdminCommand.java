@@ -5,8 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.nebich.infected.game.GameManager;
-import org.nebich.infected.player.PlayerManager;
+import org.nebich.infected.Infected;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +13,9 @@ import java.util.Map;
 public class InfectedAdminCommand implements CommandExecutor {
     private final Map<String, CommandExecutor> subCommandsMap = new HashMap<>();
 
-    protected InfectedAdminCommand(GameManager gameManager, PlayerManager playerManager) {
-        this.subCommandsMap.put(CommandPrefix.LAUNCH, new InfectedAdminStartCommand(gameManager));
-        this.subCommandsMap.put(CommandPrefix.TRANSFORM, new InfectedAdminTransformCommand(playerManager, gameManager));
+    protected InfectedAdminCommand(Infected plugin) {
+        this.subCommandsMap.put(CommandPrefix.LAUNCH, new InfectedAdminStartCommand(plugin));
+        this.subCommandsMap.put(CommandPrefix.TRANSFORM, new InfectedAdminTransformCommand(plugin));
     }
 
     @Override
