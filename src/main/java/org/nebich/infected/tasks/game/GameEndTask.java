@@ -1,4 +1,4 @@
-package org.nebich.infected.tasks;
+package org.nebich.infected.tasks.game;
 
 import org.bukkit.scheduler.BukkitRunnable;
 import org.nebich.infected.game.GameManager;

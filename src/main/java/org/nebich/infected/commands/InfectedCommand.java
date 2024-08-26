@@ -14,8 +14,8 @@ public class InfectedCommand implements CommandExecutor {
     private final Map<String, CommandExecutor> subCommandsMap = new HashMap<>();
 
     public InfectedCommand(Infected plugin) {
-        this.subCommandsMap.put(CommandPrefix.JOIN, new JoinGameCommand(plugin.getWorldsManager(), plugin.getPlayerManager(), plugin));
-        this.subCommandsMap.put("admin", new InfectedAdminCommand(plugin.getGameManager(), plugin.getPlayerManager()));
+        this.subCommandsMap.put(CommandPrefix.JOIN, new JoinGameCommand(plugin));
+        this.subCommandsMap.put("admin", new InfectedAdminCommand(plugin));
     }
 
     @Override
@@ -33,9 +33,11 @@ public class InfectedCommand implements CommandExecutor {
 
             if (args[0].equals(CommandPrefix.JOIN)) {
                 this.subCommandsMap.get(CommandPrefix.JOIN).onCommand(commandSender, command, s, args);
+                return true;
             }
             if (args[0].equals(CommandPrefix.ADMIN)) {
                 this.subCommandsMap.get(CommandPrefix.ADMIN).onCommand(commandSender, command, s, args);
+                return true;
             }
         }
         return false;

@@ -21,15 +21,15 @@ public class FumigeneTask extends BukkitRunnable {
     public FumigeneTask(Player player, Location blockHitedByFumigene, Infected plugin) {
         this.blockHitedByFumigene = blockHitedByFumigene;
         this.shooter = player;
-        this.runTaskTimerAsynchronously(plugin, 0, 20);
+        this.runTaskTimer(plugin, 0, 20);
     }
 
     @Override
     public void run() {
-        if (this.timer <= 0) {
+        if (this.timer <= 0 ) {
             cancel();
         }
-        ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter, true);
+        ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter);
         List<Player> playerInTheGame = shooter.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(this.blockHitedByFumigene) <= SPHERE_RADIUS).toList();
         for (Player player : playerInTheGame) {
             if (player.getUniqueId() != this.shooter.getUniqueId()) {

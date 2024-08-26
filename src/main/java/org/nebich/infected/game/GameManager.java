@@ -1,13 +1,14 @@
 package org.nebich.infected.game;
 
 import org.nebich.infected.Infected;
-import org.nebich.infected.tasks.GameStartTask;
-import org.nebich.infected.tasks.GameTimerTask;
-import org.nebich.infected.utils.TimeUtils;
+import org.nebich.infected.tasks.bonus.SpawnBonusTask;
+import org.nebich.infected.tasks.game.GameStartTask;
+import org.nebich.infected.tasks.game.GameTimerTask;
 
 public class GameManager {
     private GameStatus gameStatus = GameStatus.WAITING;
     private final Infected plugin;
+    private int gameTimer = 5 * 60;
 
     public GameManager(Infected plugin) {
         this.plugin = plugin;
@@ -29,11 +30,12 @@ public class GameManager {
             this.plugin.getPlayerManager().chooseFirstZombies();
         }
         this.gameStatus = GameStatus.PLAYING;
-        new GameTimerTask(this, this.plugin, this.plugin.getWorldsManager()).runTaskTimer(this.plugin, 0, TimeUtils.seconds(1));
+        new GameTimerTask(this.plugin);
+        new SpawnBonusTask(this.plugin);
     }
 
     public void startWaitingTask() {
-        new GameStartTask(this.plugin, this.plugin.getWorldsManager(), this).runTaskTimer(this.plugin, 0, TimeUtils.seconds(1));
+        new GameStartTask(this.plugin);
     }
 
     public void end() {
@@ -41,8 +43,11 @@ public class GameManager {
     }
 
     public int getGameTimer() {
-        // Temps en secondes soit 5 minutes
-        return 5 * 60;
+        return this.gameTimer;
+    }
+
+    public void decrementGameTimer() {
+        this.gameTimer--;
     }
 
     public int getWaitingTimer() {
