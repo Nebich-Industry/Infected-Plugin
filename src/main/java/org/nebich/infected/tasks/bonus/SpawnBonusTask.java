@@ -17,6 +17,7 @@ import java.util.Random;
 public class SpawnBonusTask extends BukkitRunnable {
     private final Infected plugin;
     private final Map<Integer, Bonus> bonusMap = new HashMap<>();
+    private final Random random = new Random();
 
     public SpawnBonusTask(Infected plugin) {
         this.plugin = plugin;
@@ -44,9 +45,8 @@ public class SpawnBonusTask extends BukkitRunnable {
         Location wbCenter = currentGameWorld.getWorldBorder().getCenter();
         Location randomLocation;
 
-        Random random = new Random();
-        double x = random.nextDouble(-wbSize, wbSize);
-        double z = random.nextDouble(-wbSize, wbSize);
+        double x = this.random.nextDouble(-wbSize, wbSize);
+        double z = this.random.nextDouble(-wbSize, wbSize);
         // Récupération de la valeur du spawn du monde de la config car le centre de la world border est set à Y = 0
         String worldConfigKey = "worlds."+this.plugin.getWorldsManager().getCurrentWorld().getName();
         double worldSpawnY = this.plugin.getConfig().getDouble(worldConfigKey+".spawn.y");

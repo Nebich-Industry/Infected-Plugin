@@ -11,7 +11,7 @@ import org.nebich.infected.Infected;
 public abstract class Bonus implements Listener {
     private ItemStack item;
 
-    public Bonus(Infected plugin) {
+    protected Bonus(Infected plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
@@ -27,8 +27,8 @@ public abstract class Bonus implements Listener {
 
     @EventHandler
     public void handleDispawn(ItemDespawnEvent despawnEvent) {
-        Item item = despawnEvent.getEntity();
-        if (item.getName().toLowerCase().contains("fumigene")) {
+        Item despawnEventEntity = despawnEvent.getEntity();
+        if (despawnEventEntity.getName().toLowerCase().contains("fumigene")) {
             despawnEvent.setCancelled(true);
         }
     }
