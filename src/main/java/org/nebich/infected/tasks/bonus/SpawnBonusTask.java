@@ -30,7 +30,7 @@ public class SpawnBonusTask extends BukkitRunnable {
     public void run() {
         int gameTimer = this.plugin.getGameManager().getGameTimer();
         if (gameTimer <= 4 * 60 && gameTimer % 20 == 0 && gameTimer > 1) {
-            Location generatedLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 1, 0);
+            Location generatedLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
             Bukkit.getLogger().info(String.format("DEBUG: Bonus location : %s", generatedLocation));
             Item itemDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedLocation, getBonusToSpawn().getItem());
             itemDropped.setGravity(false);
