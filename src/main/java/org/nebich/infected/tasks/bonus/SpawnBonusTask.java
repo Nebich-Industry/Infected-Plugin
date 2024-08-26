@@ -53,8 +53,8 @@ public class SpawnBonusTask extends BukkitRunnable {
         randomLocation = wbCenter.add(x, worldSpawnY, z);
 
         while (!currentGameWorld.getWorldBorder().isInside(randomLocation)) {
-            x = random.nextDouble(-wbSize, wbSize);
-            z = random.nextDouble(-wbSize, wbSize);
+            x = this.random.nextDouble(-wbSize, wbSize);
+            z = this.random.nextDouble(-wbSize, wbSize);
             randomLocation = wbCenter.add(x, wbCenter.getY(), z);
         }
 
@@ -62,8 +62,7 @@ public class SpawnBonusTask extends BukkitRunnable {
     }
 
     private Bonus getBonusToSpawn() {
-        Random random = new Random();
-        int randomIndex = random.nextInt(this.bonusMap.values().size());
+        int randomIndex = this.random.nextInt(this.bonusMap.values().size());
         return bonusMap.get(randomIndex);
     }
 }
