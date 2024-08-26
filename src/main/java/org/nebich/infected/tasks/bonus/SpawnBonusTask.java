@@ -10,14 +10,14 @@ import org.nebich.infected.Infected;
 import org.nebich.infected.items.bonus.Bonus;
 import org.nebich.infected.items.bonus.FumigeneItem;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class SpawnBonusTask extends BukkitRunnable {
     private final Infected plugin;
     private final Map<Integer, Bonus> bonusMap = new HashMap<>();
-    private final Random random = new Random();
+    private final SecureRandom random = new SecureRandom();
 
     public SpawnBonusTask(Infected plugin) {
         this.plugin = plugin;
