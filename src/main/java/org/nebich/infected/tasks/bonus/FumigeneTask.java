@@ -26,7 +26,7 @@ public class FumigeneTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (this.timer <= 0) {
+        if (this.timer <= 0 ) {
             cancel();
         }
         ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter);
