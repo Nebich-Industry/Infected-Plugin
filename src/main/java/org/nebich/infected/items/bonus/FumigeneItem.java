@@ -1,10 +1,12 @@
 package org.nebich.infected.items.bonus;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -17,7 +19,8 @@ public class FumigeneItem extends Bonus implements Listener{
     private final Infected plugin;
 
     public FumigeneItem(Infected plugin) {
-        super();
+        super(plugin);
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
         this.setItem(createItem());
     }
@@ -25,7 +28,7 @@ public class FumigeneItem extends Bonus implements Listener{
     @EventHandler
     public void handleHitOnTheGround(ProjectileHitEvent event) {
         Projectile projectile = event.getEntity();
-        if (projectile.getShooter() instanceof Player && projectile instanceof FumigeneItem) {
+        if (projectile.getShooter() instanceof Player && projectile instanceof Snowball) {
             Block blockHited = event.getHitBlock();
             if (blockHited != null) {
                 new FumigeneTask(((Player) projectile.getShooter()).getPlayer(), blockHited.getLocation(), this.plugin);

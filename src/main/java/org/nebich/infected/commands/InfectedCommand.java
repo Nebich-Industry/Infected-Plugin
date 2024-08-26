@@ -33,9 +33,11 @@ public class InfectedCommand implements CommandExecutor {
 
             if (args[0].equals(CommandPrefix.JOIN)) {
                 this.subCommandsMap.get(CommandPrefix.JOIN).onCommand(commandSender, command, s, args);
+                return true;
             }
             if (args[0].equals(CommandPrefix.ADMIN)) {
                 this.subCommandsMap.get(CommandPrefix.ADMIN).onCommand(commandSender, command, s, args);
+                return true;
             }
         }
         return false;

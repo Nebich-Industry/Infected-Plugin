@@ -29,7 +29,7 @@ public class FumigeneTask extends BukkitRunnable {
         if (this.timer <= 0) {
             cancel();
         }
-        ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter, true);
+        ParticuleUtils.generateSphere(this.blockHitedByFumigene, Particle.LARGE_SMOKE, this.shooter);
         List<Player> playerInTheGame = shooter.getWorld().getPlayers().stream().filter(p -> p.getLocation().distance(this.blockHitedByFumigene) <= SPHERE_RADIUS).toList();
         for (Player player : playerInTheGame) {
             if (player.getUniqueId() != this.shooter.getUniqueId()) {
