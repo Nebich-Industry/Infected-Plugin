@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class PlayerManager {
     private final List<InfectedPlayer> playerList = new ArrayList<>();
@@ -61,10 +60,10 @@ public class PlayerManager {
     }
 
     public List<InfectedPlayer> getSurvivors() {
-        return this.playerList.stream().filter(InfectedPlayer::isSurvivor).collect(Collectors.toList());
+        return this.playerList.stream().filter(InfectedPlayer::isSurvivor).toList();
     }
 
     public List<InfectedPlayer> getZombies() {
-        return this.playerList.stream().filter(InfectedPlayer::isZombie).collect(Collectors.toList());
+        return this.playerList.stream().filter(InfectedPlayer::isZombie).toList();
     }
 }
