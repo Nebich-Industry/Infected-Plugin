@@ -5,14 +5,15 @@ import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
 import org.nebich.infected.survivors.Role;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 public class PlayerManager {
-    private final List<Survivor> survivors = new ArrayList<>();
-    private final List<Zombie> zombies = new ArrayList<>();
+    private final List<InfectedPlayer> playerList = new ArrayList<>();
     private final Infected plugin;
 
     public PlayerManager(Infected plugin) {
@@ -20,44 +21,49 @@ public class PlayerManager {
     }
 
     public void chooseFirstZombies() {
-        int survivorsSize = this.survivors.size();
+        int survivorsSize = this.playerList.size();
         int zombiesToChoose = survivorsSize <= 10 ? 1 : Math.max(Math.round((float) survivorsSize / 10), 5);
         for (int i=0; i < zombiesToChoose; i++) {
-            Random random = new Random();
+            Random random = new SecureRandom();
             int randomIndex = random.nextInt(survivorsSize);
-            Survivor survivorToRemove = this.survivors.get(randomIndex);
-            Player playerSelected = survivorToRemove.getPlayer();
-            this.zombies.add(new Zombie(playerSelected, true));
-            if (this.survivors.get(randomIndex).getPlayer().getUniqueId() == survivorToRemove.getPlayer().getUniqueId()) {
-                this.survivors.remove(randomIndex);
-            }
-            playerSelected.sendMessage("Vous venez de vous transformer en zombie.");
+            InfectedPlayer playerToTransform = this.playerList.get(randomIndex);
+            playerToTransform.setIsZombie(true);
+            playerToTransform.setIsSurvivor(false);
+            playerToTransform.setSelectedAtStart(true);
+            playerToTransform.getPlayer().sendMessage("Vous venez de vous transformer en zombie.");
         }
     }
 
     public void addPlayer(Player player) {
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
-            this.addZombie(player);
+            this.playerList.add(new InfectedPlayer(player, true));
         } else {
-            this.survivors.add(new Survivor(player));
+            this.playerList.add(new InfectedPlayer(player));
         }
     }
 
     public void selectSurvivorClass(Player player, Role role) {
-        Optional<Survivor> survivor = this.survivors.stream().filter(s -> s.getPlayer().getUniqueId() == player.getUniqueId()).findFirst();
-        survivor.ifPresent(value -> value.setRole(role));
+        Optional<InfectedPlayer> survivor = this.playerList.stream().filter(s -> s.getPlayer().getUniqueId() == player.getUniqueId()).findFirst();
+        survivor.ifPresent(infectedPlayer -> infectedPlayer.setRole(role));
     }
 
     public void addZombie(Player player) {
-        this.survivors.removeIf(survivor -> survivor.getPlayer().getUniqueId() == player.getUniqueId());
-        this.zombies.add(new Zombie(player));
+        this.playerList.add(new InfectedPlayer(player, true));
     }
 
-    public List<Survivor> getSurvivors() {
-        return this.survivors;
+    public List<InfectedPlayer> getPlayers() {
+        return this.playerList;
     }
 
-    public List<Zombie> getZombies() {
-        return this.zombies;
+    public Optional<InfectedPlayer> getPlayer(UUID uuid) {
+        return this.playerList.stream().filter(player -> player.getPlayer().getUniqueId() == uuid).findFirst();
+    }
+
+    public List<InfectedPlayer> getSurvivors() {
+        return this.playerList.stream().filter(InfectedPlayer::isSurvivor).toList();
+    }
+
+    public List<InfectedPlayer> getZombies() {
+        return this.playerList.stream().filter(InfectedPlayer::isZombie).toList();
     }
 }

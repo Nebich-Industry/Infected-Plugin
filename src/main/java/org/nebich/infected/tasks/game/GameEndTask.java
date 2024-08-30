@@ -15,7 +15,7 @@ public class GameEndTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (this.playerManager.getSurvivors() != null && this.playerManager.getSurvivors().isEmpty()) {
+        if (this.playerManager.getPlayers() != null && this.playerManager.getPlayers().isEmpty()) {
             this.gameManager.end();
             cancel();
         }
