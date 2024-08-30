@@ -8,7 +8,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.nebich.infected.Infected;
 import org.nebich.infected.player.InfectedPlayer;
-import org.nebich.infected.player.Survivor;
 import org.nebich.infected.survivors.Ninja;
 import org.nebich.infected.utils.ParticuleUtils;
 import org.nebich.infected.utils.TimeUtils;
@@ -41,7 +40,7 @@ public class FumigeneTask extends BukkitRunnable {
             Optional<InfectedPlayer> optionalPlayer = this.plugin.getPlayerManager().getPlayer(player.getUniqueId());
             if (optionalPlayer.isPresent()) {
                 InfectedPlayer infectedPlayer = optionalPlayer.get();
-                if (infectedPlayer.isSurvivor() && ((Survivor) infectedPlayer).getRole() instanceof Ninja) {
+                if (infectedPlayer.isSurvivor() && infectedPlayer.getRole() instanceof Ninja) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, TimeUtils.seconds(2), 0));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, TimeUtils.seconds(2), 0));
                 } else {

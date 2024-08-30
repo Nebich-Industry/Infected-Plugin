@@ -29,26 +29,26 @@ public class PlayerManager {
             InfectedPlayer playerToTransform = this.playerList.get(randomIndex);
             playerToTransform.setIsZombie(true);
             playerToTransform.setIsSurvivor(false);
-            ((Zombie) playerToTransform).setSelectedAtStart(true);
+            playerToTransform.setSelectedAtStart(true);
             playerToTransform.getPlayer().sendMessage("Vous venez de vous transformer en zombie.");
         }
     }
 
     public void addPlayer(Player player) {
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
-            this.playerList.add(new Zombie(player));
+            this.playerList.add(new InfectedPlayer(player, true));
         } else {
-            this.playerList.add(new Survivor(player));
+            this.playerList.add(new InfectedPlayer(player));
         }
     }
 
     public void selectSurvivorClass(Player player, Role role) {
         Optional<InfectedPlayer> survivor = this.playerList.stream().filter(s -> s.getPlayer().getUniqueId() == player.getUniqueId()).findFirst();
-        survivor.ifPresent(infectedPlayer -> ((Survivor) infectedPlayer).setRole(role));
+        survivor.ifPresent(infectedPlayer -> infectedPlayer.setRole(role));
     }
 
     public void addZombie(Player player) {
-        this.playerList.add(new Zombie(player));
+        this.playerList.add(new InfectedPlayer(player, true));
     }
 
     public List<InfectedPlayer> getPlayers() {
