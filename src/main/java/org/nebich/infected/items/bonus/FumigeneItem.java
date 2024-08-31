@@ -22,7 +22,6 @@ public class FumigeneItem extends Bonus implements Listener{
         super(plugin);
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
-        this.setItem(createItem());
     }
 
     @EventHandler

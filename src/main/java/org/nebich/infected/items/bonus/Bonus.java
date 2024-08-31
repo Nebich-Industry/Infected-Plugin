@@ -13,6 +13,7 @@ public abstract class Bonus implements Listener {
 
     protected Bonus(Infected plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
+        this.item = createItem();
     }
 
     public ItemStack getItem() {
