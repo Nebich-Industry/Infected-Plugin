@@ -1,5 +1,6 @@
 package org.nebich.infected.game;
 
+import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
 import org.nebich.infected.tasks.bonus.SpawnBonusTask;
 import org.nebich.infected.tasks.game.GameStartTask;
@@ -30,6 +31,9 @@ public class GameManager {
             this.plugin.getPlayerManager().chooseFirstZombies();
         }
         this.gameStatus = GameStatus.PLAYING;
+        for (Player player : this.plugin.getWorldsManager().getCurrentWorld().getPlayers()) {
+            player.getInventory().clear();
+        }
         new GameTimerTask(this.plugin);
         new SpawnBonusTask(this.plugin);
     }
