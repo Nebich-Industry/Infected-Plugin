@@ -5,10 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.nebich</groupId>
-    <artifactId>Infected</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>infected</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Infected</name>
+
+    <distributionManagement>
+       <repository>
+         <id>github</id>
+         <name>GitHub OWNER Apache Maven Packages</name>
+         <url>https://maven.pkg.github.com/nebich-industry/infected-plugin</url>
+       </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
