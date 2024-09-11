@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.nebich</groupId>
-    <artifactId>Infected</artifactId>
+    <artifactId>infected</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>infected</name>
+    <name>Infected</name>
 
     <distributionManagement>
        <repository>
