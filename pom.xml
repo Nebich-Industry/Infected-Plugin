@@ -8,13 +8,13 @@
     <artifactId>Infected</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Infected</name>
+    <name>infected</name>
 
     <distributionManagement>
        <repository>
          <id>github</id>
          <name>GitHub OWNER Apache Maven Packages</name>
-         <url>https://maven.pkg.github.com/nebich-industry/infected-Pplugin</url>
+         <url>https://maven.pkg.github.com/nebich-industry/infected-plugin</url>
        </repository>
     </distributionManagement>
 
