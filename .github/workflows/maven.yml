@@ -27,3 +27,6 @@ jobs:
       - name: Run unit tests
         run: mvn test
 
+      - name: Deploy
+        run: mvn deploy
+
