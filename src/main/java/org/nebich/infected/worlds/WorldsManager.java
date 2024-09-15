@@ -8,11 +8,11 @@ import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.nebich.infected.Infected;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class WorldsManager {
@@ -58,7 +58,7 @@ public class WorldsManager {
     }
 
     public void setRandomWorld() {
-        int randomWorlIndex = new Random().nextInt(this.worlds.size());
+        int randomWorlIndex = new SecureRandom().nextInt(this.worlds.size());
         Iterator<World> worldsIterator = this.worlds.iterator();
         for(int i = 0; i < randomWorlIndex; i++) {
             worldsIterator.next();
