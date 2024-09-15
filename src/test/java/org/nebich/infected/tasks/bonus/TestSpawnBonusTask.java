@@ -31,8 +31,8 @@ public class TestSpawnBonusTask {
     }
 
     @Test
-    @DisplayName("It should choose zombie")
-    public void testChooseZombie() {
+    @DisplayName("It should spawn the different bonuses")
+    public void testSpawnBonus() {
         serverMock.addSimpleWorld("world_infected_city");
         Player player = serverMock.addPlayer();
         Player player2 = serverMock.addPlayer();
@@ -42,8 +42,9 @@ public class TestSpawnBonusTask {
 
         infectedPlugin.getGameManager().launch(false);
 
-        serverMock.getScheduler().performTicks(TimeUtils.minutes(2));
+        serverMock.getScheduler().performTicks(TimeUtils.minutes(3));
         List<Item> entities = infectedPlugin.getWorldsManager().getCurrentWorld().getEntitiesByClass(Item.class).stream().toList();
         Assertions.assertTrue(entities.stream().anyMatch(entity -> entity.getItemStack().getType() == Material.SNOWBALL));
+        Assertions.assertTrue(entities.stream().anyMatch(entity -> entity.getItemStack().getType() == Material.POTION));
     }
 }

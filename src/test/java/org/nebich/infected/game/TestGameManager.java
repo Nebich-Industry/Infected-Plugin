@@ -2,6 +2,7 @@ package org.nebich.infected.game;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -40,6 +41,7 @@ public class TestGameManager {
         Assertions.assertNotNull(infectedPlugin.getWorldsManager().getCurrentWorld());
         Assertions.assertEquals(1, infectedPlugin.getPlayerManager().getZombies().size());
         Assertions.assertEquals(GameStatus.PLAYING, infectedPlugin.getGameManager().getGameStatus());
+        Assertions.assertEquals(-1, player.getInventory().first(Material.NETHER_STAR));
     }
 
     @Test
