@@ -30,6 +30,9 @@ jobs:
       - name: Run unit tests
         run: mvn test
 
+      - name: Bearer - Secuity Check
+        uses: bearer/bearer-action@v2  
+
       - name: Deploy
         run: mvn --batch-mode deploy
         env:
