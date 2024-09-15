@@ -36,7 +36,6 @@ public class JoinGameCommand implements CommandExecutor {
             } catch (Exception e) {
                 player.sendMessage("Une erreur s'est produite lors de la téléportation");
                 Bukkit.getLogger().log(Level.WARNING, "[Infected] Erreur lors de la téléportation.");
-                e.printStackTrace();
             }
         }
         return false;
