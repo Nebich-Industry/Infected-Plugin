@@ -22,7 +22,6 @@ public class FumigeneItem extends Bonus implements Listener{
         super(plugin);
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
-        this.setItem(createItem());
     }
 
     @EventHandler
@@ -40,7 +39,7 @@ public class FumigeneItem extends Bonus implements Listener{
         ItemStack item = new ItemStack(Material.SNOWBALL);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(ChatColor.BOLD + ChatColor.GRAY.toString() + "Fumigene");
+            meta.setDisplayName(ChatColor.BOLD + ChatColor.GRAY.toString() + "Bonus Fumigene");
         }
         item.setItemMeta(meta);
         return item;
