@@ -11,10 +11,11 @@ import org.nebich.infected.player.InfectedPlayer;
 import java.security.SecureRandom;
 import java.util.Optional;
 
-public class Doctor implements Role, Listener {
+public class Doctor extends Role implements Listener {
     private final Infected plugin;
 
-    public Doctor(Infected plugin) {
+    public Doctor(Infected plugin, Player player) {
+        super(plugin, player);
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
     }

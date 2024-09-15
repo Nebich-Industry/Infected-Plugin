@@ -59,15 +59,15 @@ public class SelectClassGUI implements InventoryHolder, Listener {
         String itemName = Objects.requireNonNull(Objects.requireNonNull(clickedItem).getItemMeta()).getDisplayName().toLowerCase();
         if (itemName.contains("ninja")) {
             player.sendMessage("Vous avez choisi la classe ninja.");
-            this.plugin.getPlayerManager().selectSurvivorClass(player, new Ninja());
+            this.plugin.getPlayerManager().selectSurvivorClass(player, new Ninja(this.plugin, player));
         }
         if (itemName.contains("docteur")) {
             player.sendMessage("Vous avez choisi la classe docteur.");
-            this.plugin.getPlayerManager().selectSurvivorClass(player, new Doctor(this.plugin));
+            this.plugin.getPlayerManager().selectSurvivorClass(player, new Doctor(this.plugin, player));
         }
         if (itemName.contains("archer")) {
             player.sendMessage("Vous avez choisi la classe archer.");
-            this.plugin.getPlayerManager().selectSurvivorClass(player, new Archer());
+            this.plugin.getPlayerManager().selectSurvivorClass(player, new Archer(this.plugin, player));
         }
     }
 
