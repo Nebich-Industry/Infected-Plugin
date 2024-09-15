@@ -9,8 +9,6 @@ public class GameStartingEvent extends Event implements Cancellable {
     private boolean isCancelled = false;
     private static final HandlerList HANDLERS_LIST = new HandlerList();
 
-    public GameStartingEvent() {}
-
     @Override
     public @NotNull HandlerList getHandlers() {
         return HANDLERS_LIST;

@@ -10,7 +10,7 @@ public abstract class Role {
     private final Player player;
     private final Infected plugin;
 
-    public Role(Infected plugin, Player player) {
+    protected Role(Infected plugin, Player player) {
         this.player = player;
         this.plugin = plugin;
     }
