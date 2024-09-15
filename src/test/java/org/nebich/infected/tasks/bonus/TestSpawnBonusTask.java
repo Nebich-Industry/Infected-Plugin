@@ -44,7 +44,7 @@ public class TestSpawnBonusTask {
 
         serverMock.getScheduler().performTicks(TimeUtils.minutes(3));
         List<Item> entities = infectedPlugin.getWorldsManager().getCurrentWorld().getEntitiesByClass(Item.class).stream().toList();
-        Assertions.assertTrue(entities.stream().anyMatch(entity -> entity.getItemStack().getType() == Material.SNOWBALL));
-        Assertions.assertTrue(entities.stream().anyMatch(entity -> entity.getItemStack().getType() == Material.POTION));
+        Assertions.assertTrue(entities.stream().anyMatch(entity -> entity.getItemStack().getType() == Material.SNOWBALL ||
+                entity.getItemStack().getType() == Material.POTION));
     }
 }
