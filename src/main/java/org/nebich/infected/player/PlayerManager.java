@@ -3,7 +3,11 @@ package org.nebich.infected.player;
 import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
+import org.nebich.infected.survivors.Archer;
+import org.nebich.infected.survivors.Doctor;
+import org.nebich.infected.survivors.Ninja;
 import org.nebich.infected.survivors.Role;
+import org.nebich.infected.survivors.Roles;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -38,7 +42,9 @@ public class PlayerManager {
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
             this.playerList.add(new InfectedPlayer(player, true));
         } else {
-            this.playerList.add(new InfectedPlayer(player));
+            InfectedPlayer infectedPlayer = new InfectedPlayer(player);
+            infectedPlayer.setRole(getRandomRole(player));
+            this.playerList.add(infectedPlayer);
         }
     }
 
@@ -65,5 +71,22 @@ public class PlayerManager {
 
     public List<InfectedPlayer> getZombies() {
         return this.playerList.stream().filter(InfectedPlayer::isZombie).toList();
+    }
+
+    private Role getRandomRole(Player player) {
+        SecureRandom secureRandom = new SecureRandom();
+        Roles[] roles = Roles.values();
+        int randomIndex = secureRandom.nextInt(roles.length-1);
+        switch (roles[randomIndex]) {
+            case ARCHER -> {
+                return new Archer(this.plugin, player);
+            }
+            case DOCTOR -> {
+                return new Doctor(this.plugin, player);
+            }
+            default -> {
+                return new Ninja(this.plugin, player);
+            }
+        }
     }
 }

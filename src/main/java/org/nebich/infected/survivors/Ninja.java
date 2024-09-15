@@ -1,3 +1,10 @@
 package org.nebich.infected.survivors;
 
-public class Ninja implements Role{}
+import org.bukkit.entity.Player;
+import org.nebich.infected.Infected;
+
+public class Ninja extends Role {
+    public Ninja(Infected plugin,  Player player) {
+        super(plugin, player);
+    }
+}

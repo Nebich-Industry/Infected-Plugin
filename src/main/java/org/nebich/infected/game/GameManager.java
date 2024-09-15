@@ -1,7 +1,9 @@
 package org.nebich.infected.game;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
+import org.nebich.infected.events.GameStartingEvent;
 import org.nebich.infected.tasks.bonus.SpawnBonusTask;
 import org.nebich.infected.tasks.game.GameStartTask;
 import org.nebich.infected.tasks.game.GameTimerTask;
@@ -36,6 +38,7 @@ public class GameManager {
         }
         new GameTimerTask(this.plugin);
         new SpawnBonusTask(this.plugin);
+        Bukkit.getPluginManager().callEvent(new GameStartingEvent());
     }
 
     public void startWaitingTask() {
