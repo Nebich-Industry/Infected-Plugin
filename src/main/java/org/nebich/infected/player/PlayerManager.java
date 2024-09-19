@@ -3,6 +3,7 @@ package org.nebich.infected.player;
 import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
+import org.nebich.infected.scoreboard.InfectedScoreboard;
 import org.nebich.infected.survivors.Archer;
 import org.nebich.infected.survivors.Doctor;
 import org.nebich.infected.survivors.Ninja;
@@ -39,13 +40,17 @@ public class PlayerManager {
     }
 
     public void addPlayer(Player player) {
+        InfectedScoreboard infectedScoreboard = this.plugin.getInfectedScoreboard();
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
             this.playerList.add(new InfectedPlayer(player, true));
+            infectedScoreboard.addZombieTeamEntry(player);
         } else {
             InfectedPlayer infectedPlayer = new InfectedPlayer(player);
             infectedPlayer.setRole(getRandomRole(player));
             this.playerList.add(infectedPlayer);
+            infectedScoreboard.addSurvivorTeamEntry(player);
         }
+        player.setScoreboard(infectedScoreboard.getScoreboard());
     }
 
     public void selectSurvivorClass(Player player, Role role) {

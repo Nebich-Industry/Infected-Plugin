@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.nebich.infected.commands.InfectedCommand;
 import org.nebich.infected.game.GameManager;
 import org.nebich.infected.player.PlayerManager;
+import org.nebich.infected.scoreboard.InfectedScoreboard;
 import org.nebich.infected.survivors.SelectClassGUI;
 import org.nebich.infected.worlds.WorldsManager;
 
@@ -15,6 +16,7 @@ public class Infected extends JavaPlugin {
     private PlayerManager playerManager;
     private GameManager gameManager;
     private SelectClassGUI selectClassGUI;
+    private InfectedScoreboard infectedScoreboard;
 
     @Override
     public void onEnable() {
@@ -26,6 +28,7 @@ public class Infected extends JavaPlugin {
         this.worldsManager.loadWorlds();
         this.gameManager.startWaitingTask();
         this.selectClassGUI = new SelectClassGUI(this);
+        this.infectedScoreboard = new InfectedScoreboard(this);
         this.loadCommands();
     }
 
@@ -53,5 +56,9 @@ public class Infected extends JavaPlugin {
 
     public SelectClassGUI getSelectClassGUI() {
         return selectClassGUI;
+    }
+
+    public InfectedScoreboard getInfectedScoreboard() {
+        return this.infectedScoreboard;
     }
 }
