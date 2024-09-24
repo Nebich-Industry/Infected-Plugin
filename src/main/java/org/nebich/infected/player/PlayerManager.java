@@ -42,10 +42,10 @@ public class PlayerManager {
     public void addPlayer(Player player) {
         InfectedScoreboard infectedScoreboard = this.plugin.getInfectedScoreboard();
         if (this.plugin.getGameManager().getGameStatus() == GameStatus.PLAYING) {
-            this.playerList.add(new InfectedPlayer(player, true));
+            this.playerList.add(new InfectedPlayer(this.plugin, player, true));
             infectedScoreboard.addZombieTeamEntry(player);
         } else {
-            InfectedPlayer infectedPlayer = new InfectedPlayer(player);
+            InfectedPlayer infectedPlayer = new InfectedPlayer(this.plugin,player);
             infectedPlayer.setRole(getRandomRole(player));
             this.playerList.add(infectedPlayer);
             infectedScoreboard.addSurvivorTeamEntry(player);
@@ -59,7 +59,7 @@ public class PlayerManager {
     }
 
     public void addZombie(Player player) {
-        this.playerList.add(new InfectedPlayer(player, true));
+        this.playerList.add(new InfectedPlayer(this.plugin, player, true));
     }
 
     public List<InfectedPlayer> getPlayers() {

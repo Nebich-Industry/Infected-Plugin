@@ -34,7 +34,7 @@ update-java-alternatives --list
 ```
 On peut changer de JDK avec la commande suivante :
 ```bash
-sudo update-java-alternatives --set /usr/lib/jvm/java-1.11.0-openjdk-amd64
+sudo update-java-alternatives --set /usr/lib/jvm/java-1.21.0-openjdk-amd64
 ```
 
 Il faut aussi que le serveur est un monde qui soit dans le dossier des mondes et que le nom du monde commence par world_infected_xxx.

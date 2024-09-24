@@ -1,25 +1,34 @@
 package org.nebich.infected.player;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.nebich.infected.Infected;
 import org.nebich.infected.survivors.Role;
 
-public class InfectedPlayer {
+import java.util.Optional;
+
+public class InfectedPlayer implements Listener {
     private final Player player;
     private Role role;
     private boolean isZombie;
     private boolean isSurvivor;
     private boolean isSelectedAtStart = false;
+    private final Infected plugin;
 
-    protected InfectedPlayer(Player player) {
+    protected InfectedPlayer(Infected plugin, Player player) {
         this.player = player;
         this.isSurvivor = true;
         this.isZombie = false;
+        this.plugin = plugin;
     }
 
-    protected InfectedPlayer(Player player, boolean isZombie) {
+    protected InfectedPlayer(Infected plugin, Player player, boolean isZombie) {
         this.player = player;
         this.isSurvivor = !isZombie;
         this.isZombie = isZombie;
+        this.plugin = plugin;
     }
 
     public Player getPlayer() {
@@ -32,6 +41,7 @@ public class InfectedPlayer {
 
     public void setIsZombie(boolean bool) {
         this.isZombie = bool;
+        this.isSurvivor = !bool;
     }
 
     public boolean isSurvivor() {
@@ -40,6 +50,7 @@ public class InfectedPlayer {
 
     public void setIsSurvivor(boolean bool) {
         this.isSurvivor = bool;
+        this.isZombie = !bool;
     }
 
     public Role getRole() {
@@ -51,7 +62,7 @@ public class InfectedPlayer {
     }
 
     public void transform() {
-        // Will be implemented with zombies features
+        this.setIsZombie(true);
     }
 
     public boolean isSelectedAtStart() {
@@ -60,5 +71,12 @@ public class InfectedPlayer {
 
     public void setSelectedAtStart(boolean selectedAtStart) {
         this.isSelectedAtStart = selectedAtStart;
+    }
+
+    @EventHandler
+    public void handlePlayerDeath(PlayerDeathEvent event) {
+        final Player deadPlayer = event.getEntity();
+        Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(deadPlayer.getUniqueId());
+        infectedPlayer.ifPresent(InfectedPlayer::transform);
     }
 }
