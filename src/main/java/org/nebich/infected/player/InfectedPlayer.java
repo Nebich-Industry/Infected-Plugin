@@ -3,6 +3,7 @@ package org.nebich.infected.player;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.nebich.infected.Infected;
 import org.nebich.infected.survivors.Role;
@@ -78,5 +79,40 @@ public class InfectedPlayer implements Listener {
         final Player deadPlayer = event.getEntity();
         Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(deadPlayer.getUniqueId());
         infectedPlayer.ifPresent(InfectedPlayer::transform);
+    }
+
+    @EventHandler
+    public void handleSurvivorDamages(EntityDamageByEntityEvent event) {
+        event.setCancelled(true);
+        if (event.getEntity() instanceof Player attackedPlayer && event.getDamager() instanceof Player damagerPlayer) {
+            Optional<InfectedPlayer> attackedOptionalInfectedPlayer = this.plugin.getPlayerManager().getPlayer(attackedPlayer.getUniqueId());
+            Optional<InfectedPlayer> damagerOptionalInfectedPlayer = this.plugin.getPlayerManager().getPlayer(damagerPlayer.getUniqueId());
+
+            if (attackedOptionalInfectedPlayer.isPresent() && damagerOptionalInfectedPlayer.isPresent()) {
+                InfectedPlayer attackedinfectedPlayer = attackedOptionalInfectedPlayer.get();
+                InfectedPlayer damagerInfectedPlayer = damagerOptionalInfectedPlayer.get();
+
+                if (damagerInfectedPlayer.isSurvivor() && attackedinfectedPlayer.isZombie()) {
+                    dealSurvivorDamages(attackedPlayer);
+                }
+            }
+        }
+    }
+
+    private void dealSurvivorDamages(Player zombieToAttack) {
+        double damageToDeal = 4;
+        if (this.plugin.getGameManager().getGameTimer() <= 210) {
+            damageToDeal = 8;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 90) {
+            damageToDeal = 16;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 150) {
+            damageToDeal = 12;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 30) {
+            damageToDeal = 20;
+        }
+        zombieToAttack.setHealth(zombieToAttack.getHealth() - damageToDeal);
     }
 }
