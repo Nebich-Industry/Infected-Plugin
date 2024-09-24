@@ -3,6 +3,7 @@ package org.nebich.infected.player;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.nebich.infected.Infected;
 import org.nebich.infected.survivors.Role;
@@ -78,5 +79,41 @@ public class InfectedPlayer implements Listener {
         final Player deadPlayer = event.getEntity();
         Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(deadPlayer.getUniqueId());
         infectedPlayer.ifPresent(InfectedPlayer::transform);
+    }
+
+    @EventHandler
+    public void handleSurvivorDamages(EntityDamageByEntityEvent event) {
+        event.setCancelled(true);
+        if (event.getEntity() instanceof Player attackedPlayer && event.getDamager() instanceof Player damagerPlayer) {
+            Optional<InfectedPlayer> attackedOptionalInfectedPlayer = this.plugin.getPlayerManager().getPlayer(attackedPlayer.getUniqueId());
+            Optional<InfectedPlayer> damagerOptionalInfectedPlayer = this.plugin.getPlayerManager().getPlayer(damagerPlayer.getUniqueId());
+
+            if (attackedOptionalInfectedPlayer.isPresent() && damagerOptionalInfectedPlayer.isPresent()) {
+                InfectedPlayer attackedinfectedPlayer = attackedOptionalInfectedPlayer.get();
+                InfectedPlayer damagerInfectedPlayer = damagerOptionalInfectedPlayer.get();
+
+                if (damagerInfectedPlayer.isSurvivor() && attackedinfectedPlayer.isZombie()) {
+                    if (this.plugin.getGameManager().getGameTimer() <= 30) {
+                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 20);
+                        return;
+                    }
+                    if (this.plugin.getGameManager().getGameTimer() <= 90) {
+                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 16);
+                        return;
+                    }
+                    if (this.plugin.getGameManager().getGameTimer() <= 150) {
+                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 12);
+                        return;
+                    }
+                    if (this.plugin.getGameManager().getGameTimer() <= 210) {
+                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 8);
+                        return;
+                    }
+                    if (this.plugin.getGameManager().getGameTimer() <= 300) {
+                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 4);
+                    }
+                }
+            }
+        }
     }
 }
