@@ -93,27 +93,26 @@ public class InfectedPlayer implements Listener {
                 InfectedPlayer damagerInfectedPlayer = damagerOptionalInfectedPlayer.get();
 
                 if (damagerInfectedPlayer.isSurvivor() && attackedinfectedPlayer.isZombie()) {
-                    if (this.plugin.getGameManager().getGameTimer() <= 30) {
-                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 20);
-                        return;
-                    }
-                    if (this.plugin.getGameManager().getGameTimer() <= 90) {
-                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 16);
-                        return;
-                    }
-                    if (this.plugin.getGameManager().getGameTimer() <= 150) {
-                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 12);
-                        return;
-                    }
-                    if (this.plugin.getGameManager().getGameTimer() <= 210) {
-                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 8);
-                        return;
-                    }
-                    if (this.plugin.getGameManager().getGameTimer() <= 300) {
-                        attackedPlayer.setHealth(attackedPlayer.getHealth() - 4);
-                    }
+                    dealSurvivorDamages(attackedPlayer);
                 }
             }
         }
+    }
+
+    private void dealSurvivorDamages(Player zombieToAttack) {
+        double damageToDeal = 4;
+        if (this.plugin.getGameManager().getGameTimer() <= 210) {
+            damageToDeal = 8;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 90) {
+            damageToDeal = 16;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 150) {
+            damageToDeal = 12;
+        }
+        if (this.plugin.getGameManager().getGameTimer() <= 30) {
+            damageToDeal = 20;
+        }
+        zombieToAttack.setHealth(zombieToAttack.getHealth() - damageToDeal);
     }
 }
