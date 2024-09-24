@@ -10,6 +10,7 @@ import org.nebich.infected.Infected;
 import org.nebich.infected.items.bonus.Bonus;
 import org.nebich.infected.items.bonus.FumigeneItem;
 import org.nebich.infected.items.bonus.HealItem;
+import org.nebich.infected.items.bonus.InstakillItem;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class SpawnBonusTask extends BukkitRunnable {
         this.plugin = plugin;
         this.bonusMap.put(0, new FumigeneItem(this.plugin));
         this.bonusMap.put(1, new HealItem(this.plugin));
-        this.bonusMap.put(2, new FumigeneItem(this.plugin));
+        this.bonusMap.put(2, new InstakillItem(this.plugin));
         this.runTaskTimer(this.plugin, 0, 20);
     }
 

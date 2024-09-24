@@ -1,5 +1,6 @@
 package org.nebich.infected.player;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,9 +17,11 @@ public class InfectedPlayer implements Listener {
     private boolean isZombie;
     private boolean isSurvivor;
     private boolean isSelectedAtStart = false;
+    private boolean hasInstakillBonus = false;
     private final Infected plugin;
 
     protected InfectedPlayer(Infected plugin, Player player) {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         this.player = player;
         this.isSurvivor = true;
         this.isZombie = false;
@@ -26,6 +29,7 @@ public class InfectedPlayer implements Listener {
     }
 
     protected InfectedPlayer(Infected plugin, Player player, boolean isZombie) {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         this.player = player;
         this.isSurvivor = !isZombie;
         this.isZombie = isZombie;
@@ -74,6 +78,14 @@ public class InfectedPlayer implements Listener {
         this.isSelectedAtStart = selectedAtStart;
     }
 
+    public boolean hasInstakillBonus() {
+        return hasInstakillBonus;
+    }
+
+    public void setHasInstakillBonus(boolean hasInstakillBonus) {
+        this.hasInstakillBonus = hasInstakillBonus;
+    }
+
     @EventHandler
     public void handlePlayerDeath(PlayerDeathEvent event) {
         final Player deadPlayer = event.getEntity();
@@ -93,13 +105,14 @@ public class InfectedPlayer implements Listener {
                 InfectedPlayer damagerInfectedPlayer = damagerOptionalInfectedPlayer.get();
 
                 if (damagerInfectedPlayer.isSurvivor() && attackedinfectedPlayer.isZombie()) {
-                    dealSurvivorDamages(attackedPlayer);
+                    dealSurvivorDamages(attackedinfectedPlayer);
                 }
             }
         }
     }
 
-    private void dealSurvivorDamages(Player zombieToAttack) {
+    private void dealSurvivorDamages(InfectedPlayer zombieToAttack) {
+        final Player zombieToAttackPlayer = zombieToAttack.getPlayer();
         double damageToDeal = 4;
         if (this.plugin.getGameManager().getGameTimer() <= 210) {
             damageToDeal = 8;
@@ -110,9 +123,9 @@ public class InfectedPlayer implements Listener {
         if (this.plugin.getGameManager().getGameTimer() <= 150) {
             damageToDeal = 12;
         }
-        if (this.plugin.getGameManager().getGameTimer() <= 30) {
+        if (this.plugin.getGameManager().getGameTimer() <= 30 || zombieToAttack.hasInstakillBonus()) {
             damageToDeal = 20;
         }
-        zombieToAttack.setHealth(zombieToAttack.getHealth() - damageToDeal);
+        zombieToAttackPlayer.setHealth(zombieToAttackPlayer.getHealth() - damageToDeal);
     }
 }
