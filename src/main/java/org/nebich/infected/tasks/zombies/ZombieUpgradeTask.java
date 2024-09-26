@@ -4,7 +4,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
 import org.nebich.infected.player.InfectedPlayer;
-import org.nebich.infected.zombies.ZombieRole;
+import org.nebich.infected.zombies.Pigman;
 
 import java.security.SecureRandom;
 
@@ -29,10 +29,18 @@ public class ZombieUpgradeTask extends BukkitRunnable {
             this.hasBeenTransformed = true;
             int luck = new SecureRandom().nextInt(100);
             if (luck <= 50) {
-                this.infectedPlayer.setZombieRole(new ZombieRole());
+                this.setRandomZombieRole(infectedPlayer);
             } else {
                 this.infectedPlayer.transformInSurvivor();
             }
         }
+    }
+
+    private void setRandomZombieRole(InfectedPlayer infectedPlayer) {
+        int random = new SecureRandom().nextInt(100);
+        if (random <= 33) {
+            infectedPlayer.setZombieRole(new Pigman(infectedPlayer));
+        }
+        infectedPlayer.getZombieRole().transform();
     }
 }
