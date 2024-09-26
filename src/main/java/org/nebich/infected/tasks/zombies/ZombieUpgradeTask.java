@@ -5,6 +5,7 @@ import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
 import org.nebich.infected.player.InfectedPlayer;
 import org.nebich.infected.zombies.Pigman;
+import org.nebich.infected.zombies.Skeleton;
 
 import java.security.SecureRandom;
 
@@ -40,6 +41,9 @@ public class ZombieUpgradeTask extends BukkitRunnable {
         int random = new SecureRandom().nextInt(100);
         if (random <= 33) {
             infectedPlayer.setZombieRole(new Pigman(infectedPlayer));
+        }
+        if (random > 33 && random <= 66) {
+            infectedPlayer.setZombieRole(new Skeleton(this.plugin, infectedPlayer));
         }
         infectedPlayer.getZombieRole().transform();
     }
