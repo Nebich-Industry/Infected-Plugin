@@ -7,18 +7,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.nebich.infected.Infected;
+import org.nebich.infected.scoreboard.InfectedScoreboard;
 import org.nebich.infected.survivors.Role;
+import org.nebich.infected.tasks.zombies.ZombieUpgradeTask;
+import org.nebich.infected.zombies.ZombieRole;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class InfectedPlayer implements Listener {
     private final Player player;
     private Role role;
+    private ZombieRole zombieRole;
     private boolean isZombie;
     private boolean isSurvivor;
     private boolean isSelectedAtStart = false;
     private boolean hasInstakillBonus = false;
     private final Infected plugin;
+    private final List<Player> killedPlayersAsZombie = new ArrayList<>();
 
     protected InfectedPlayer(Infected plugin, Player player) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -34,6 +42,9 @@ public class InfectedPlayer implements Listener {
         this.isSurvivor = !isZombie;
         this.isZombie = isZombie;
         this.plugin = plugin;
+        if (isZombie) {
+            new ZombieUpgradeTask(this.plugin, this);
+        }
     }
 
     public Player getPlayer() {
@@ -66,8 +77,26 @@ public class InfectedPlayer implements Listener {
         this.role = role;
     }
 
-    public void transform() {
+    public void transformInZombie() {
         this.setIsZombie(true);
+        InfectedScoreboard infectedScoreboard = this.plugin.getInfectedScoreboard();
+        infectedScoreboard.removeSurvivorTeamEntry(this.player);
+        infectedScoreboard.addZombieTeamEntry(this.player);
+        if (this.role != null) {
+            this.setRole(null);
+        }
+        new ZombieUpgradeTask(this.plugin, this);
+    }
+
+    public void transformInSurvivor() {
+        this.setIsSurvivor(true);
+        InfectedScoreboard infectedScoreboard = this.plugin.getInfectedScoreboard();
+        infectedScoreboard.removeZombieTeamEntry(this.player);
+        infectedScoreboard.addSurvivorTeamEntry(this.player);
+        if (this.zombieRole != null) {
+            this.setZombieRole(null);
+        }
+        this.setRole(this.plugin.getPlayerManager().getRandomRole(this.player));
     }
 
     public boolean isSelectedAtStart() {
@@ -86,11 +115,42 @@ public class InfectedPlayer implements Listener {
         this.hasInstakillBonus = hasInstakillBonus;
     }
 
+    public void addZombieKill(Player player) {
+        this.killedPlayersAsZombie.add(player);
+    }
+
+    public List<Player> getKilledPlayersAsZombie() {
+        return this.killedPlayersAsZombie;
+    }
+
+    public ZombieRole getZombieRole() {
+        return zombieRole;
+    }
+
+    public void setZombieRole(ZombieRole zombieRole) {
+        this.zombieRole = zombieRole;
+    }
+
     @EventHandler
     public void handlePlayerDeath(PlayerDeathEvent event) {
         final Player deadPlayer = event.getEntity();
-        Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(deadPlayer.getUniqueId());
-        infectedPlayer.ifPresent(InfectedPlayer::transform);
+        Optional<InfectedPlayer> optionalDeadPlayerInfected = this.plugin.getPlayerManager().getPlayer(deadPlayer.getUniqueId());
+        optionalDeadPlayerInfected.ifPresent(deadPlayerInfected -> {
+            if (deadPlayerInfected.isSurvivor()) {
+                deadPlayerInfected.transformInZombie();
+            }
+
+            if (deadPlayerInfected.getPlayer().getUniqueId() == this.getPlayer().getUniqueId()) {
+                this.plugin.getWorldsManager().teleportToWorld(player);
+            }
+        });
+
+        Optional<InfectedPlayer> optionalKillerInfectedPlayer = this.plugin.getPlayerManager().getPlayer(Objects.requireNonNull(deadPlayer.getKiller()).getUniqueId());
+        optionalKillerInfectedPlayer.ifPresent(killerInfectedPlayer -> {
+            if (killerInfectedPlayer.isZombie()) {
+                killerInfectedPlayer.addZombieKill(deadPlayer);
+            }
+        });
     }
 
     @EventHandler

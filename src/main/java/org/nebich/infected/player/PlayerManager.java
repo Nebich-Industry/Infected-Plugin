@@ -60,6 +60,9 @@ public class PlayerManager {
 
     public void addZombie(Player player) {
         this.playerList.add(new InfectedPlayer(this.plugin, player, true));
+        InfectedScoreboard infectedScoreboard = this.plugin.getInfectedScoreboard();
+        infectedScoreboard.addZombieTeamEntry(player);
+        player.setScoreboard(infectedScoreboard.getScoreboard());
     }
 
     public List<InfectedPlayer> getPlayers() {
@@ -78,7 +81,7 @@ public class PlayerManager {
         return this.playerList.stream().filter(InfectedPlayer::isZombie).toList();
     }
 
-    private Role getRandomRole(Player player) {
+    protected Role getRandomRole(Player player) {
         SecureRandom secureRandom = new SecureRandom();
         Roles[] roles = Roles.values();
         int randomIndex = secureRandom.nextInt(roles.length-1);

@@ -25,11 +25,8 @@ public class JoinGameCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (commandSender instanceof Player player) {
             try {
-                World currentWorldPlaying = this.plugin.getWorldsManager().getCurrentWorld();
-                String worldConfigKey = "worlds."+currentWorldPlaying.getName();
-                Location teleportToGame = new Location(currentWorldPlaying, this.plugin.getConfig().getDouble(worldConfigKey+".spawn.x"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.y"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.z"));
+                this.plugin.getWorldsManager().teleportToWorld(player);
                 player.setGameMode(GameMode.ADVENTURE);
-                player.teleport(teleportToGame);
                 this.plugin.getPlayerManager().addPlayer(player);
                 player.getInventory().setItem(4, new SelectRoleItem(this.plugin).getItemStack());
                 return true;

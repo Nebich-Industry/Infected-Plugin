@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.nebich.infected.Infected;
 
 import java.security.SecureRandom;
@@ -78,5 +79,11 @@ public class WorldsManager {
         Bukkit.getLogger().info("[Infected] Configuration du centre de la world border");
         Bukkit.getLogger().info("[Infected] Configuration de la taille de la world border");
         Bukkit.getLogger().info("[Infected] World border créée avec succès");
+    }
+
+    public void teleportToWorld(Player player) {
+        String worldConfigKey = "worlds."+ this.getCurrentWorld().getName();
+        Location teleportToGame = new Location(this.getCurrentWorld(), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.x"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.y"), this.plugin.getConfig().getDouble(worldConfigKey+".spawn.z"));
+        player.teleport(teleportToGame);
     }
 }
