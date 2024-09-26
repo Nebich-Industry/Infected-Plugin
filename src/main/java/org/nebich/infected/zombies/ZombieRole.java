@@ -1,4 +1,5 @@
 package org.nebich.infected.zombies;
 
-public class ZombieRole {
+public interface ZombieRole {
+    void transform();
 }
