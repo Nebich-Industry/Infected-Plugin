@@ -50,8 +50,18 @@ public class InfectedScoreboard {
         this.survivorsTeam.setSuffix(String.valueOf(this.plugin.getPlayerManager().getSurvivors().size()));
     }
 
+    public void removeSurvivorTeamEntry(Player player) {
+        this.survivorsTeam.removeEntry(player.getUniqueId().toString());
+        this.survivorsTeam.setSuffix(String.valueOf(this.plugin.getPlayerManager().getSurvivors().size()));
+    }
+
     public void addZombieTeamEntry(Player player) {
         this.zombiesTeam.addEntry(player.getUniqueId().toString());
+        this.zombiesTeam.setSuffix(String.valueOf(this.plugin.getPlayerManager().getZombies().size()));
+    }
+
+    public void removeZombieTeamEntry(Player player) {
+        this.zombiesTeam.removeEntry(player.getUniqueId().toString());
         this.zombiesTeam.setSuffix(String.valueOf(this.plugin.getPlayerManager().getZombies().size()));
     }
 }
