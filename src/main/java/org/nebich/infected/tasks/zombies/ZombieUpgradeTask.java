@@ -4,6 +4,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
 import org.nebich.infected.player.InfectedPlayer;
+import org.nebich.infected.zombies.Husk;
 import org.nebich.infected.zombies.Pigman;
 import org.nebich.infected.zombies.Skeleton;
 
@@ -44,6 +45,9 @@ public class ZombieUpgradeTask extends BukkitRunnable {
         }
         if (random > 33 && random <= 66) {
             infectedPlayer.setZombieRole(new Skeleton(this.plugin, infectedPlayer));
+        }
+        if (random > 66) {
+            infectedPlayer.setZombieRole(new Husk(this.plugin, infectedPlayer));
         }
         infectedPlayer.getZombieRole().transform();
     }
