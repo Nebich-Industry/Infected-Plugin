@@ -17,10 +17,10 @@ import org.bukkit.potion.PotionType;
 import org.nebich.infected.Infected;
 import org.nebich.infected.utils.TimeUtils;
 
-public class InvisibilityZombieBonus extends Bonus implements Listener {
+public class InvisibilityZombieItem extends Bonus implements Listener {
     private final Infected plugin;
 
-    public InvisibilityZombieBonus(Infected plugin) {
+    public InvisibilityZombieItem(Infected plugin) {
         super(plugin);
         this.plugin = plugin;
     }

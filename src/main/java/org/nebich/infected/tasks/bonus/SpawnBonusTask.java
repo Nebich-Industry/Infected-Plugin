@@ -39,7 +39,7 @@ public class SpawnBonusTask extends BukkitRunnable {
             Item itemDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedLocation, getBonusToSpawn().getItem());
             itemDropped.setGravity(false);
             itemDropped.setVelocity(new Vector(0,0,0));
-            Item itemZombieDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedZombieLocation, new InvisibilityZombieBonus(this.plugin).getItem());
+            Item itemZombieDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedZombieLocation, new InvisibilityZombieItem(this.plugin).getItem());
             itemZombieDropped.setGravity(false);
             itemZombieDropped.setVelocity(new Vector(0,0,0));
         }
