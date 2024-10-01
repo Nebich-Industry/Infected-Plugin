@@ -26,7 +26,6 @@ public class SpawnBonusTask extends BukkitRunnable {
         this.bonusMap.put(0, new FumigeneItem(this.plugin));
         this.bonusMap.put(1, new HealItem(this.plugin));
         this.bonusMap.put(2, new InstakillItem(this.plugin));
-        this.bonusMap.put(3, new InvisibilityZombieBonus(this.plugin));
         this.runTaskTimer(this.plugin, 0, 20);
     }
 
@@ -35,10 +34,14 @@ public class SpawnBonusTask extends BukkitRunnable {
         int gameTimer = this.plugin.getGameManager().getGameTimer();
         if (gameTimer <= 4 * 60 && gameTimer % 20 == 0 && gameTimer > 1) {
             Location generatedLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
+            Location generatedZombieLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
             Bukkit.getLogger().info(String.format("DEBUG: Bonus location : %s", generatedLocation));
             Item itemDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedLocation, getBonusToSpawn().getItem());
             itemDropped.setGravity(false);
             itemDropped.setVelocity(new Vector(0,0,0));
+            Item itemZombieDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedZombieLocation, new InvisibilityZombieBonus(this.plugin).getItem());
+            itemZombieDropped.setGravity(false);
+            itemZombieDropped.setVelocity(new Vector(0,0,0));
         }
     }
 
