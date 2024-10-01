@@ -11,6 +11,7 @@ import org.nebich.infected.items.bonus.Bonus;
 import org.nebich.infected.items.bonus.FumigeneItem;
 import org.nebich.infected.items.bonus.HealItem;
 import org.nebich.infected.items.bonus.InstakillItem;
+import org.nebich.infected.items.bonus.InvisibilityZombieItem;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -34,11 +35,12 @@ public class SpawnBonusTask extends BukkitRunnable {
         int gameTimer = this.plugin.getGameManager().getGameTimer();
         if (gameTimer <= 4 * 60 && gameTimer % 20 == 0 && gameTimer > 1) {
             Location generatedLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
-            Location generatedZombieLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
             Bukkit.getLogger().info(String.format("DEBUG: Bonus location : %s", generatedLocation));
             Item itemDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedLocation, getBonusToSpawn().getItem());
             itemDropped.setGravity(false);
             itemDropped.setVelocity(new Vector(0,0,0));
+            Location generatedZombieLocation = this.plugin.getWorldsManager().getCurrentWorld().getHighestBlockAt(this.getRandomLocationInsideWorldBorder()).getLocation().add(0, 2, 0);
+            Bukkit.getLogger().info(String.format("DEBUG: Bonus zombie location : %s", generatedZombieLocation));
             Item itemZombieDropped = this.plugin.getWorldsManager().getCurrentWorld().dropItem(generatedZombieLocation, new InvisibilityZombieItem(this.plugin).getItem());
             itemZombieDropped.setGravity(false);
             itemZombieDropped.setVelocity(new Vector(0,0,0));

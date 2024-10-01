@@ -1,21 +1,23 @@
 package org.nebich.infected.items.bonus;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.nebich.infected.Infected;
+import org.nebich.infected.player.InfectedPlayer;
 import org.nebich.infected.utils.TimeUtils;
+
+import java.util.Optional;
 
 public class InvisibilityZombieItem extends Bonus implements Listener {
     private final Infected plugin;
@@ -41,15 +43,12 @@ public class InvisibilityZombieItem extends Bonus implements Listener {
     public void handlePickupHealItem(EntityPickupItemEvent event) {
         ItemMeta itemMeta = event.getItem().getItemStack().getItemMeta();
         LivingEntity livingEntity = event.getEntity();
-        Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(player.getUniqueId());
-        if (livingEntity instanceof Player player
-            && infectedPlayer.isPresent()
-            && infectedPlayer.get().isZombie()
-            && itemMeta != null 
-            && itemMeta.getDisplayName().toLowerCase().contains("bonus invisibility")
-        ) {
-            player.getInventory().remove(item.getItemStack());
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, TimeUtils.seconds(5), 0));
+        if (livingEntity instanceof Player player && itemMeta != null && itemMeta.getDisplayName().toLowerCase().contains("bonus invisibility")) {
+            Optional<InfectedPlayer> infectedPlayer = this.plugin.getPlayerManager().getPlayer(player.getUniqueId());
+            if (infectedPlayer.isPresent() && infectedPlayer.get().isZombie()) {
+                player.getInventory().remove(event.getItem().getItemStack());
+                player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, TimeUtils.seconds(5), 0));
+            }
         }
     }
 }
