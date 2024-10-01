@@ -26,6 +26,7 @@ public class SpawnBonusTask extends BukkitRunnable {
         this.bonusMap.put(0, new FumigeneItem(this.plugin));
         this.bonusMap.put(1, new HealItem(this.plugin));
         this.bonusMap.put(2, new InstakillItem(this.plugin));
+        this.bonusMap.put(3, new InvisibilityZombieBonus(this.plugin));
         this.runTaskTimer(this.plugin, 0, 20);
     }
 
