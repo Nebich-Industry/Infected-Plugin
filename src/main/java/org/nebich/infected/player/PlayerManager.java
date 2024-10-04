@@ -1,6 +1,10 @@
 package org.nebich.infected.player;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.nebich.infected.Infected;
 import org.nebich.infected.game.GameStatus;
 import org.nebich.infected.scoreboard.InfectedScoreboard;
@@ -17,12 +21,13 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
-public class PlayerManager {
+public class PlayerManager implements Listener {
     private final List<InfectedPlayer> playerList = new ArrayList<>();
     private final Infected plugin;
 
     public PlayerManager(Infected plugin) {
         this.plugin = plugin;
+        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     public void chooseFirstZombies() {
@@ -65,10 +70,6 @@ public class PlayerManager {
         player.setScoreboard(infectedScoreboard.getScoreboard());
     }
 
-    public List<InfectedPlayer> getPlayers() {
-        return this.playerList;
-    }
-
     public Optional<InfectedPlayer> getPlayer(UUID uuid) {
         return this.playerList.stream().filter(player -> player.getPlayer().getUniqueId() == uuid).findFirst();
     }
@@ -95,6 +96,14 @@ public class PlayerManager {
             default -> {
                 return new Ninja(this.plugin, player);
             }
+        }
+    }
+
+    @EventHandler
+    public void handlePlayerChangeWorld(PlayerChangedWorldEvent event) {
+        if (event.getFrom().getName().startsWith("world_infected")) {
+            final UUID playerChangingWorldUUID = event.getPlayer().getUniqueId();
+            this.playerList.removeIf(player -> player.getPlayer().getUniqueId() == playerChangingWorldUUID);
         }
     }
 }
