@@ -1,22 +1,23 @@
 package org.nebich.infected.tasks.game;
 
 import org.bukkit.scheduler.BukkitRunnable;
-import org.nebich.infected.game.GameManager;
-import org.nebich.infected.player.PlayerManager;
+import org.nebich.infected.Infected;
+import org.nebich.infected.player.InfectedPlayer;
+
+import java.util.List;
 
 public class GameEndTask extends BukkitRunnable {
-    private final PlayerManager playerManager;
-    private final GameManager gameManager;
+    private final Infected plugin;
 
-    public GameEndTask(PlayerManager playerManager, GameManager gameManager) {
-        this.playerManager = playerManager;
-        this.gameManager = gameManager;
+    public GameEndTask(Infected plugin) {
+        this.plugin = plugin;
     }
 
     @Override
     public void run() {
-        if (this.playerManager.getPlayers() != null && this.playerManager.getPlayers().isEmpty()) {
-            this.gameManager.end();
+        List<InfectedPlayer> survivors = this.plugin.getPlayerManager().getSurvivors();
+        if ((survivors != null && survivors.isEmpty()) || this.plugin.getGameManager().getGameTimer() <= 0) {
+            this.plugin.getGameManager().end();
             cancel();
         }
     }
